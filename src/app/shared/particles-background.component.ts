@@ -31,15 +31,17 @@ export class ParticlesBackgroundComponent implements AfterViewInit, OnDestroy {
   }
 
   private async ensureLibrary(): Promise<void> {
+    // Try local vendor copy first
+    const loadScript = (src: string) => new Promise<void>((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src; s.async = true; s.onload = () => resolve(); s.onerror = () => reject();
+      document.head.appendChild(s);
+    });
     try { await import('particles.js'); } catch {}
     if (!(window as any).particlesJS) {
-      await new Promise<void>((resolve) => {
-        const s = document.createElement('script');
-        s.src = 'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
-        s.async = true;
-        s.onload = () => resolve();
-        document.head.appendChild(s);
-      });
+      try { await loadScript('/vendor/particles.min.js'); } catch {
+        try { await loadScript('https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js'); } catch {}
+      }
     }
   }
 
