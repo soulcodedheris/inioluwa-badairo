@@ -1,12 +1,21 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ThemeService } from './shared/theme.service';
+import { ParticlesBackgroundComponent } from './shared/particles-background.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, ParticlesBackgroundComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  // styleUrl removed; using global Tailwind styles
 })
 export class App {
   protected readonly title = signal('portfolio');
+  constructor(private theme: ThemeService) {
+    this.theme.init();
+  }
+
+  toggleTheme() {
+    this.theme.toggle();
+  }
 }

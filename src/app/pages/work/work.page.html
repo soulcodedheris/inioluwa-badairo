@@ -1,0 +1,20 @@
+<section class="mx-auto min-h-dvh w-full max-w-6xl px-6 py-16" appAppear>
+  <header class="mb-10">
+    <h1 class="text-3xl font-semibold sm:text-5xl">Selected Work</h1>
+    <p class="mt-3 max-w-2xl text-gray-600">Four to six projects, each with a clear problem, role, constraints, and measurable result.</p>
+  </header>
+
+  <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+    @for (w of items; track w.slug) {
+      <li class="rounded-xl border border-gray-200 p-5 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-900/40">
+        <a [routerLink]="['/work', w.slug]" class="block no-underline">
+          <h3 class="text-lg font-medium">{{ w.title }}</h3>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-300">{{ w.blurb }}</p>
+          <p class="mt-3 text-xs text-gray-500">{{ w.tags.join(' · ') }}</p>
+        </a>
+      </li>
+    }
+  </ul>
+</section>
+
+

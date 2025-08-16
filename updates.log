@@ -1,0 +1,71 @@
+2025-08-16T07:56:33Z | chore: align Tailwind + PostCSS with Angular 20 and fix build
+- Dependencies:
+  - Removed devDependency: @tailwindcss/postcss
+  - Installed devDependencies: tailwindcss@3, postcss@^8, autoprefixer@^10
+  - Versions now (package.json): tailwindcss ^3.4.17, postcss ^8.5.6, autoprefixer ^10.4.21
+- Config edits:
+  - postcss.config.js: use `tailwindcss` and `autoprefixer` plugins
+  - tailwind.config.js: set darkMode to 'class'; removed unsupported `future` field (v3 compatibility)
+  - angular.json: disabled production font inlining: configurations.production.optimization.fonts = false
+- Build:
+  - Confirmed `npm run build` succeeds; output at `dist/portfolio`
+
+2025-08-16T07:58:43Z | feat+improve: website updates & improvements since start
+- Layout & navigation:
+  - Replaced Angular starter template with custom header, primary nav, and theme toggle in `src/app/app.html`
+  - Ensured full-viewport main container and dark mode classes
+- Routing & pages:
+  - Configured lazy-loaded routes for: home, work (+ case-study dynamic), playground, articles, principles, about, contact (`src/app/app.routes.ts`)
+  - Added page components and minimal CSS/HTML for all routes under `src/app/pages/*`
+- Theming:
+  - Implemented `ThemeService` for dark/light mode with persistence (`src/app/shared/theme.service.ts`)
+  - Initialized theme in `App` component and wired toggle handler (`src/app/app.ts`)
+- Styling foundation:
+  - Set up Tailwind CSS with global layers and base tokens in `src/styles.css`
+  - Configured `tailwind.config.js` content paths and darkMode 'class'
+- Assets & content:
+  - Added brand assets: `public/Heris-Headshot.jpg`, `public/Heris-halfbody.JPG`, `public/soulcodedheris-logo.jpeg`
+  - Added `src/assets/articles.json` seed content
+- Build & config:
+  - Tailwind v3 + PostCSS 8 alignment; added autoprefixer; disabled font inlining in production to avoid external fetch errors
+  - Confirmed production build succeeds: `dist/portfolio`
+
+2025-08-16T08:15:45Z | feat+improve: a11y, SEO, routing, data, and performance updates
+- Removed legacy inline <style> from `src/app/app.html`; added skip-to-content link; improved nav a11y with aria-current via RouterLinkActive and visible focus rings; added main `id`.
+- Fonts: shifted to system stack in `src/styles.css`; re-enabled production font optimization in `angular.json`.
+- Hero image: added fetchpriority="high", eager loading, async decoding, and responsive sizes in `home.page.html`.
+- SEO: added meta description, Open Graph, Twitter card, and canonical link in `src/index.html`.
+- NotFound: added `src/app/pages/not-found/not-found.page.ts`; updated wildcard route to `/not-found`.
+- Articles data access: switched to Angular HttpClient and provided it via `app.config.ts`.
+- Accessibility: added skip link and enhanced focus states on header nav.
+- DX/Consistency: removed empty `src/app/app.css` and dropped styleUrl.
+- Public assets: created `public/robots.txt` and `public/sitemap.xml`.
+- Build: production build successful with all changes.
+
+2025-08-16T08:48:40Z | feat+content+seo: article rendering with anchors, work items, canonical, and sitemap
+- Articles detail:
+  - Render full article HTML with anchor-linked heading IDs; Table of Contents links to anchors.
+  - Switched detail data source to `/assets/articles.json`; extract TOC from article HTML; inject per-article canonical URL.
+- Routing:
+  - Added route `articles/:slug` to render individual article pages.
+- Content:
+  - Added more `WORK_ITEMS` entries in `src/app/pages/work/work.data.ts`.
+- SEO:
+  - Extended `public/sitemap.xml` with article URLs.
+  - Kept canonical in `<head>` and dynamically update it on article detail.
+
+2025-08-16T09:12:45Z | feat+ui+motion: particles.js background, theme sync, and interactions
+- Background layer:
+  - Added `src/app/shared/particles-background.component.ts` and mounted `<app-particles-background />` in `src/app/app.html` above `<main>` with proper stacking (`z-0` vs `z-10`).
+  - Implemented particles.js Default preset with theme-aware colors (light: #111111, dark: #ffffff) and disabled when `prefers-reduced-motion` is on.
+  - Enabled pointer interactions: hover `repulse`, click `push`; detection set to `window` so it reacts across the viewport.
+- Library integration:
+  - Removed tsParticles and switched to `particles.js` per the official repo [vincentgarreau.com/particles.js](https://vincentgarreau.com/particles.js/).
+  - Dynamic import with CDN fallback (`https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js`).
+  - Added type shim `src/types/particlesjs.d.ts` to declare the module and `window.particlesJS`.
+- Theme sync:
+  - Added `MutationObserver` to watch `<html class>` and re-init particles on theme toggle (fix: visible in both light and dark modes).
+- Layout tweak:
+  - Made `<main>` `relative z-10` (removed background fills) so particles remain visible behind content.
+- Build:
+  - Build passes; Angular warns about CommonJS for `particles.js` which is acceptable.

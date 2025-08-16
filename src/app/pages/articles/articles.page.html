@@ -1,0 +1,18 @@
+<section class="mx-auto min-h-dvh w-full max-w-3xl px-6 py-16">
+  <header class="mb-10">
+    <h1 class="text-3xl font-semibold sm:text-5xl">Articles</h1>
+    <p class="mt-3 text-gray-600">Weekly reflections on purpose, culture, and human-first tech.</p>
+  </header>
+
+  <div class="space-y-6" appAppear>
+    @for (a of articles(); track a.slug) {
+      <article class="rounded-xl border border-gray-200 p-5 dark:border-gray-700">
+        <h3 class="text-lg font-medium">{{ a.title }}</h3>
+        <p class="mt-1 text-sm text-gray-500">{{ a.date | date }}</p>
+        <p class="mt-2 text-gray-700 dark:text-gray-300">{{ a.summary }}</p>
+      </article>
+    }
+  </div>
+</section>
+
+

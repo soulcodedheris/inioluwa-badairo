@@ -1,0 +1,37 @@
+<article class="mx-auto min-h-dvh w-full max-w-3xl px-6 py-16" appAppear>
+  <a routerLink="/work" class="text-sm text-gray-600 hover:text-gray-900">← Back to work</a>
+  <header class="mt-6">
+    <p class="text-xs uppercase tracking-widest text-gray-500">Case Study</p>
+    <h1 class="mt-2 text-3xl font-semibold sm:text-5xl">{{ item?.title || (route.snapshot.paramMap.get('slug') || 'Case Study') | titlecase }}</h1>
+    <p class="mt-4 text-gray-600 dark:text-gray-300">{{ item?.blurb || 'Problem, role, constraints, process, result, reflection.' }}</p>
+  </header>
+
+  <section class="mt-10 space-y-6">
+    <div>
+      <h2 class="text-2xl font-semibold">Problem</h2>
+      <p class="mt-2 text-gray-700 dark:text-gray-300">What was broken or unclear.</p>
+    </div>
+    <div>
+      <h2 class="text-2xl font-semibold">Role</h2>
+      <p class="mt-2 text-gray-700 dark:text-gray-300">What I owned, with whom, for how long.</p>
+    </div>
+    <div>
+      <h2 class="text-2xl font-semibold">Constraints</h2>
+      <p class="mt-2 text-gray-700 dark:text-gray-300">Real limits that forced smart choices.</p>
+    </div>
+    <div>
+      <h2 class="text-2xl font-semibold">Process</h2>
+      <p class="mt-2 text-gray-700 dark:text-gray-300">Approach, decisions, and alternatives considered.</p>
+    </div>
+    <div>
+      <h2 class="text-2xl font-semibold">Result</h2>
+      <p class="mt-2 text-gray-700 dark:text-gray-300">Outcome and measurable impact.</p>
+    </div>
+    <div>
+      <h2 class="text-2xl font-semibold">Reflection</h2>
+      <p class="mt-2 text-gray-700 dark:text-gray-300">What I’d keep, change, or try next time.</p>
+    </div>
+  </section>
+</article>
+
+
