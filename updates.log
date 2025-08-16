@@ -69,3 +69,10 @@
   - Made `<main>` `relative z-10` (removed background fills) so particles remain visible behind content.
 - Build:
   - Build passes; Angular warns about CommonJS for `particles.js` which is acceptable.
+
+2025-08-16T09:29:40Z | feat+nav+responsive: mobile header with accessible hamburger menu
+- Implemented a mobile-first header that collapses the primary navigation into a hamburger on small screens.
+- Menu behavior: focus-trap inside panel, Escape to close, click-away and route-change to dismiss, and body scroll lock while open.
+- Accessibility: toggle button uses aria-expanded/aria-controls, menu has aria-label, full keyboard support, and visible focus rings.
+- Motion: Tailwind transitions with `prefers-reduced-motion` safe fallbacks.
+- Zero extra dependencies; uses Angular and Tailwind only.
