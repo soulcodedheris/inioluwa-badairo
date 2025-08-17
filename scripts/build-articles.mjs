@@ -1,4 +1,4 @@
-import { readdir, readFile, writeFile, mkdir, copyFile } from 'node:fs/promises';
+import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import { join, basename } from 'node:path';
 import { marked } from 'marked';
 
@@ -40,17 +40,6 @@ async function run() {
     await mkdir(join(process.cwd(), 'public', 'assets'), { recursive: true });
     await writeFile(outFile, JSON.stringify(articles, null, 2), 'utf8');
     console.log(`Wrote ${articles.length} articles to assets.`);
-
-    // Also copy particles.js to public for reliable loading on hosts without CDN
-    try {
-      const srcLib = join(process.cwd(), 'node_modules', 'particles.js', 'particles.min.js');
-      const outDir = join(process.cwd(), 'public', 'vendor');
-      await mkdir(outDir, { recursive: true });
-      await copyFile(srcLib, join(outDir, 'particles.min.js'));
-      console.log('Copied particles.min.js to public/vendor.');
-    } catch (e) {
-      console.warn('Could not copy particles.min.js to public/vendor:', e?.message || e);
-    }
   } catch (e) {
     console.error(e);
     process.exitCode = 1;
