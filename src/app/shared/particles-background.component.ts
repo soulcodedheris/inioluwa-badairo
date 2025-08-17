@@ -9,42 +9,69 @@ import { AfterViewInit, Component, ElementRef, HostBinding, NgZone, OnDestroy } 
 export class ParticlesBackgroundComponent implements AfterViewInit, OnDestroy {
   @HostBinding('attr.role') role = 'presentation';
   private prefersReduced = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  private get motionEnabled(): boolean {
+    try {
+      const v = localStorage.getItem('motion');
+      if (v === 'off') return false;
+    } catch {}
+    return !this.prefersReduced;
+  }
   private themeObserver?: MutationObserver;
 
   constructor(private host: ElementRef<HTMLElement>, private zone: NgZone) {}
 
   async ngAfterViewInit(): Promise<void> {
-    if (this.prefersReduced) return;
-    await this.ensureLibrary();
-    this.render();
+    // Initial render if motion enabled
+    if (this.motionEnabled) {
+      await this.ensureLibrary();
+      this.render();
+    } else {
+      this.clear();
+    }
 
-    // Re-render when theme changes (toggle dark class on <html>)
-    this.themeObserver = new MutationObserver(() => this.render());
-    this.themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    // Re-render when theme or motion changes (class or data-motion on <html>)
+    this.themeObserver = new MutationObserver(async () => {
+      if (!this.motionEnabled) {
+        this.clear();
+        return;
+      }
+      await this.ensureLibrary();
+      this.render();
+    });
+    this.themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'data-motion'] });
   }
 
   ngOnDestroy(): void {
     // particles.js does not expose a destroy per instance; clear container
-    const el = this.host.nativeElement.querySelector('#particles-js');
-    if (el) el.innerHTML = '';
+    this.clear();
     this.themeObserver?.disconnect();
   }
 
   private async ensureLibrary(): Promise<void> {
     if ((window as any).particlesJS) return;
     // Load as a classic script (non-module) to avoid strict-mode issues (caller/callee)
-    await new Promise<void>((resolve, reject) => {
+    await new Promise<void>((resolve) => {
       const existing = document.querySelector('script[data-particlesjs]') as HTMLScriptElement | null;
       if (existing) {
         existing.addEventListener('load', () => resolve(), { once: true });
         return;
       }
       const s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
+      // Prefer local vendor file; fallback to CDN
+      s.src = '/vendor/particles.min.js';
       s.async = true;
+      s.crossOrigin = 'anonymous';
       s.setAttribute('data-particlesjs', 'true');
       s.onload = () => resolve();
-      s.onerror = () => reject();
+      s.onerror = () => {
+        const cdn = document.createElement('script');
+        cdn.src = 'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
+        cdn.async = true;
+        cdn.setAttribute('data-particlesjs', 'true');
+        cdn.onload = () => resolve();
+        cdn.onerror = () => resolve();
+        document.head.appendChild(cdn);
+      };
       document.head.appendChild(s);
     });
   }
@@ -79,6 +106,11 @@ export class ParticlesBackgroundComponent implements AfterViewInit, OnDestroy {
     } as const;
     // @ts-ignore
     this.zone.runOutsideAngular(() => (window as any).particlesJS('particles-js', options));
+  }
+
+  private clear(): void {
+    const el = this.host.nativeElement.querySelector('#particles-js');
+    if (el) el.innerHTML = '';
   }
 }
 

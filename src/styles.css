@@ -18,3 +18,9 @@ img{max-width:100%;height:auto;display:block}
 @media (prefers-reduced-motion: reduce){
   *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;scroll-behavior:auto !important}
 }
+
+/* Long-form typography and UI helpers */
+.prose-custom{ @apply prose prose-neutral max-w-none dark:prose-invert; }
+.prose-custom blockquote{ @apply border-l-4 border-gray-300 bg-gray-50/60 p-4 italic dark:border-gray-700 dark:bg-zinc-900/40; }
+.prose-custom img{ @apply rounded-md shadow; }
+.toc-card{ @apply sticky top-20 rounded-lg border border-gray-200 bg-white/70 p-4 backdrop-blur dark:border-gray-700 dark:bg-black/40; }

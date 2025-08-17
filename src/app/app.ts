@@ -13,8 +13,22 @@ import { ParticlesBackgroundComponent } from './shared/particles-background.comp
 export class App {
   protected readonly title = signal('portfolio');
   mobileOpen = signal(false);
+  motion = signal<boolean>(true);
   constructor(private theme: ThemeService) {
     this.theme.init();
+    // Initialize motion preference
+    try {
+      const stored = localStorage.getItem('motion');
+      let enabled: boolean;
+      if (stored === 'on') enabled = true;
+      else if (stored === 'off') enabled = false;
+      else {
+        const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        enabled = !prefersReduced;
+      }
+      this.motion.set(enabled);
+      document.documentElement.setAttribute('data-motion', enabled ? 'on' : 'off');
+    } catch {}
   }
 
   toggleTheme() {
@@ -27,5 +41,16 @@ export class App {
 
   closeMobileNav() {
     this.mobileOpen.set(false);
+  }
+
+  toggleMotion() {
+    try {
+      const current = this.motion();
+      const next = !current;
+      this.motion.set(next);
+      const storeVal = next ? 'on' : 'off';
+      localStorage.setItem('motion', storeVal);
+      document.documentElement.setAttribute('data-motion', storeVal);
+    } catch {}
   }
 }

@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "prebuild": "node ./scripts/build-articles.mjs",
+    "watch:articles": "node ./scripts/watch-articles.mjs",
+    "dev": "concurrently \"npm:start\" \"npm:watch:articles\"",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -33,6 +35,7 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
+    "concurrently": "^9.1.0",
     "@angular/build": "^20.1.4",
     "@angular/cli": "^20.1.4",
     "@angular/compiler-cli": "^20.1.0",
@@ -44,9 +47,16 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "marked": "^16.1.2",
+    "gray-matter": "^4.0.3",
+    "remark": "^15.0.1",
+    "remark-gfm": "^4.0.0",
+    "remark-html": "^16.0.1",
+    "remark-slug": "^7.0.1",
+    "cheerio": "^1.0.0",
+    "image-size": "^1.1.1",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
+    "@tailwindcss/typography": "^0.5.13",
     "typescript": "~5.8.2"
   }
 }

@@ -7,6 +7,16 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      colors: {
+        surface: {
+          DEFAULT: '#ffffff',
+          dark: '#0a0a0a'
+        },
+        border: {
+          DEFAULT: '#e5e7eb',
+          dark: '#2a2a2a'
+        }
+      },
       fontFamily: {
         sans: [
           'Inter',
@@ -18,9 +28,13 @@ module.exports = {
           'Arial',
           'sans-serif'
         ]
+      },
+      boxShadow: {
+        floating: '0 1px 2px 0 rgb(0 0 0 / 0.05), 0 10px 20px -10px rgb(0 0 0 / 0.2)'
       }
     }
-  }
+  },
+  plugins: [require('@tailwindcss/typography')]
 };
 
 

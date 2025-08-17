@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>/</loc></url>
-  <url><loc>/work</loc></url>
-  <url><loc>/playground</loc></url>
-  <url><loc>/articles</loc></url>
-  <url><loc>/articles/encouragement</loc></url>
-  <url><loc>/articles/purpose-over-polish</loc></url>
-  <url><loc>/principles</loc></url>
-  <url><loc>/about</loc></url>
-  <url><loc>/contact</loc></url>
-  <url><loc>/not-found</loc></url>
+<url><loc>https://soulcodedheris.com/</loc><lastmod>2025-08-16</lastmod></url>
+<url><loc>https://soulcodedheris.com/work</loc><lastmod>2025-08-16</lastmod></url>
+<url><loc>https://soulcodedheris.com/playground</loc><lastmod>2025-08-16</lastmod></url>
+<url><loc>https://soulcodedheris.com/articles</loc><lastmod>2025-08-17</lastmod></url>
+<url><loc>https://soulcodedheris.com/principles</loc><lastmod>2025-08-16</lastmod></url>
+<url><loc>https://soulcodedheris.com/about</loc><lastmod>2025-08-16</lastmod></url>
+<url><loc>https://soulcodedheris.com/contact</loc><lastmod>2025-08-16</lastmod></url>
+<url><loc>https://soulcodedheris.com/articles/second-order-thinking</loc><lastmod>2025-08-17</lastmod></url>
+<url><loc>https://soulcodedheris.com/articles/unconscious-infinite-intelligence</loc><lastmod>2025-08-17</lastmod></url>
+<url><loc>https://soulcodedheris.com/articles/purpose-over-polish</loc><lastmod>2025-08-16</lastmod></url>
+<url><loc>https://soulcodedheris.com/articles/encouragement</loc><lastmod>2025-08-16</lastmod></url>
 </urlset>
-
-
-
