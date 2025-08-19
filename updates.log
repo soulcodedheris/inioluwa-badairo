@@ -59,3 +59,8 @@ Tue Aug 19 07:44:10 AM WAT 2025: Enhanced certifications page with glassy dark m
 - Enhanced hover effects with increased opacity and blur for better visual feedback
 - Added cross-browser support with -webkit-backdrop-filter for Safari compatibility
 
+Tue Aug 19 07:54:45 AM WAT 2025: Fixed live deployment issues - CSP, particles.js, and font loading
+- Fixed Content Security Policy to allow inline scripts and Google Fonts
+- Downloaded particles.js locally and improved error handling
+- Replaced corrupted local font with Google Fonts Inter
+

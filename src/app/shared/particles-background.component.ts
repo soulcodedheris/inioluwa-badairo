@@ -49,30 +49,36 @@ export class ParticlesBackgroundComponent implements AfterViewInit, OnDestroy {
 
   private async ensureLibrary(): Promise<void> {
     if ((window as any).particlesJS) return;
+    
     // Load as a classic script (non-module) to avoid strict-mode issues (caller/callee)
-    await new Promise<void>((resolve) => {
+    await new Promise<void>((resolve, reject) => {
       const existing = document.querySelector('script[data-particlesjs]') as HTMLScriptElement | null;
       if (existing) {
         existing.addEventListener('load', () => resolve(), { once: true });
+        existing.addEventListener('error', () => reject(), { once: true });
         return;
       }
+      
       const s = document.createElement('script');
       // Prefer local vendor file; fallback to CDN
       s.src = '/vendor/particles.min.js';
       s.async = true;
       s.crossOrigin = 'anonymous';
-      s.integrity = '';
       s.setAttribute('data-particlesjs', 'true');
+      
       s.onload = () => resolve();
       s.onerror = () => {
+        console.warn('Local particles.js failed, trying CDN...');
         const cdn = document.createElement('script');
         cdn.src = 'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
         cdn.async = true;
         cdn.crossOrigin = 'anonymous';
-        cdn.integrity = '';
         cdn.setAttribute('data-particlesjs', 'true');
         cdn.onload = () => resolve();
-        cdn.onerror = () => resolve();
+        cdn.onerror = () => {
+          console.warn('Particles.js failed to load, disabling particles background');
+          resolve(); // Don't reject, just disable particles
+        };
         document.head.appendChild(cdn);
       };
       document.head.appendChild(s);
@@ -80,43 +86,68 @@ export class ParticlesBackgroundComponent implements AfterViewInit, OnDestroy {
   }
 
   private render(): void {
-    const container = this.host.nativeElement.querySelector('#particles-js');
-    if (container) container.innerHTML = '';
-    const dark = document.documentElement.classList.contains('dark');
-    const color = dark ? '#ffffff' : '#111111';
-    const path = typeof window !== 'undefined' ? window.location.pathname : '/';
-    const reducedRoutes = ['/articles', '/work', '/principles'];
-    const particleCount = reducedRoutes.some(p => path.startsWith(p)) ? 40 : 80;
-    const options = {
-      particles: {
-        number: { value: particleCount, density: { enable: true, value_area: 800 } },
-        color: { value: color },
-        shape: { type: 'circle', stroke: { width: 0, color: '#000000' }, polygon: { nb_sides: 5 } },
-        opacity: { value: 0.5, random: false, anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false } },
-        size: { value: 3, random: true, anim: { enable: false, speed: 40, size_min: 0.1, sync: false } },
-        line_linked: { enable: true, distance: 150, color: color, opacity: 0.4, width: 1 },
-        move: { enable: true, speed: 6, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false, attract: { enable: false, rotateX: 600, rotateY: 1200 } }
-      },
-      interactivity: {
-        detect_on: 'window',
-        events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
-        modes: {
-          grab: { distance: 400, line_linked: { opacity: 1 } },
-          bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 },
-          repulse: { distance: 200 },
-          push: { particles_nb: 4 },
-          remove: { particles_nb: 2 }
+    try {
+      const container = this.host.nativeElement.querySelector('#particles-js');
+      if (!container) return;
+      
+      container.innerHTML = '';
+      
+      // Check if particlesJS is available
+      if (typeof (window as any).particlesJS !== 'function') {
+        console.warn('particlesJS not available, skipping render');
+        return;
+      }
+      
+      const dark = document.documentElement.classList.contains('dark');
+      const color = dark ? '#ffffff' : '#111111';
+      const path = typeof window !== 'undefined' ? window.location.pathname : '/';
+      const reducedRoutes = ['/articles', '/work', '/principles'];
+      const particleCount = reducedRoutes.some(p => path.startsWith(p)) ? 40 : 80;
+      
+      const options = {
+        particles: {
+          number: { value: particleCount, density: { enable: true, value_area: 800 } },
+          color: { value: color },
+          shape: { type: 'circle', stroke: { width: 0, color: '#000000' }, polygon: { nb_sides: 5 } },
+          opacity: { value: 0.5, random: false, anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false } },
+          size: { value: 3, random: true, anim: { enable: false, speed: 40, size_min: 0.1, sync: false } },
+          line_linked: { enable: true, distance: 150, color: color, opacity: 0.4, width: 1 },
+          move: { enable: true, speed: 6, direction: 'none', random: false, straight: false, out_mode: 'out', bounce: false, attract: { enable: false, rotateX: 600, rotateY: 1200 } }
+        },
+        interactivity: {
+          detect_on: 'window',
+          events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' }, resize: true },
+          modes: {
+            grab: { distance: 400, line_linked: { opacity: 1 } },
+            bubble: { distance: 400, size: 40, duration: 2, opacity: 8, speed: 3 },
+            repulse: { distance: 200 },
+            push: { particles_nb: 4 },
+            remove: { particles_nb: 2 }
+          }
+        },
+        retina_detect: true
+      } as const;
+      
+      // Run outside Angular zone for better performance
+      this.zone.runOutsideAngular(() => {
+        try {
+          (window as any).particlesJS('particles-js', options);
+        } catch (error) {
+          console.warn('Failed to initialize particles:', error);
         }
-      },
-      retina_detect: true
-    } as const;
-    // @ts-ignore
-    this.zone.runOutsideAngular(() => (window as any).particlesJS('particles-js', options));
+      });
+    } catch (error) {
+      console.warn('Error rendering particles:', error);
+    }
   }
 
   private clear(): void {
-    const el = this.host.nativeElement.querySelector('#particles-js');
-    if (el) el.innerHTML = '';
+    try {
+      const el = this.host.nativeElement.querySelector('#particles-js');
+      if (el) el.innerHTML = '';
+    } catch (error) {
+      console.warn('Error clearing particles:', error);
+    }
   }
 }
 
