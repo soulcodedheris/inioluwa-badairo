@@ -1,66 +1,133 @@
-2025-08-16T07:56:33Z | chore: align Tailwind + PostCSS with Angular 20 and fix build
-- Dependencies:
-  - Removed devDependency: @tailwindcss/postcss
-  - Installed devDependencies: tailwindcss@3, postcss@^8, autoprefixer@^10
-  - Versions now (package.json): tailwindcss ^3.4.17, postcss ^8.5.6, autoprefixer ^10.4.21
-- Config edits:
-  - postcss.config.js: use `tailwindcss` and `autoprefixer` plugins
-  - tailwind.config.js: set darkMode to 'class'; removed unsupported `future` field (v3 compatibility)
-  - angular.json: disabled production font inlining: configurations.production.optimization.fonts = false
-- Build:
-  - Confirmed `npm run build` succeeds; output at `dist/portfolio`
+# Portfolio Updates Log
 
-2025-08-16T07:58:43Z | feat+improve: website updates & improvements since start
-- Layout & navigation:
-  - Replaced Angular starter template with custom header, primary nav, and theme toggle in `src/app/app.html`
-  - Ensured full-viewport main container and dark mode classes
-- Routing & pages:
-  - Configured lazy-loaded routes for: home, work (+ case-study dynamic), playground, articles, principles, about, contact (`src/app/app.routes.ts`)
-  - Added page components and minimal CSS/HTML for all routes under `src/app/pages/*`
-- Theming:
-  - Implemented `ThemeService` for dark/light mode with persistence (`src/app/shared/theme.service.ts`)
-  - Initialized theme in `App` component and wired toggle handler (`src/app/app.ts`)
-- Styling foundation:
-  - Set up Tailwind CSS with global layers and base tokens in `src/styles.css`
-  - Configured `tailwind.config.js` content paths and darkMode 'class'
-- Assets & content:
-  - Added brand assets: `public/Heris-Headshot.jpg`, `public/Heris-halfbody.JPG`, `public/soulcodedheris-logo.jpeg`
-  - Added `src/assets/articles.json` seed content
-- Build & config:
-  - Tailwind v3 + PostCSS 8 alignment; added autoprefixer; disabled font inlining in production to avoid external fetch errors
-  - Confirmed production build succeeds: `dist/portfolio`
+## 2025-01-27 - Navigation Menu Restructuring & Home Page Improvements
 
-2025-08-16T08:15:45Z | feat+improve: a11y, SEO, routing, data, and performance updates
-- Removed legacy inline <style> from `src/app/app.html`; added skip-to-content link; improved nav a11y with aria-current via RouterLinkActive and visible focus rings; added main `id`.
-- Fonts: shifted to system stack in `src/styles.css`; re-enabled production font optimization in `angular.json`.
-- Hero image: added fetchpriority="high", eager loading, async decoding, and responsive sizes in `home.page.html`.
-- SEO: added meta description, Open Graph, Twitter card, and canonical link in `src/index.html`.
-- NotFound: added `src/app/pages/not-found/not-found.page.ts`; updated wildcard route to `/not-found`.
-- Articles data access: switched to Angular HttpClient and provided it via `app.config.ts`.
-- Accessibility: added skip link and enhanced focus states on header nav.
-- DX/Consistency: removed empty `src/app/app.css` and dropped styleUrl.
-- Public assets: created `public/robots.txt` and `public/sitemap.xml`.
-- Build: production build successful with all changes.
+### Navigation Menu Enhancements
+- **Complete header redesign** with glass morphism effects and backdrop blur
+- **Better mobile layout** - hamburger menu properly positioned on the right side
+- **Enhanced desktop navigation** with organized sections (Portfolio, Knowledge, About)
+- **Improved mobile menu** with color-coded sections, icons, and descriptions
+- **Professional styling** with smooth transitions, hover effects, and better typography
+- **Accessibility improvements** with proper ARIA labels and semantic structure
 
-2025-08-16T08:48:40Z | feat+content+seo: article rendering with anchors, work items, canonical, and sitemap
-- Articles detail:
-  - Render full article HTML with anchor-linked heading IDs; Table of Contents links to anchors.
-  - Switched detail data source to `/assets/articles.json`; extract TOC from article HTML; inject per-article canonical URL.
-- Routing:
-  - Added route `articles/:slug` to render individual article pages.
-- Content:
-  - Added more `WORK_ITEMS` entries in `src/app/pages/work/work.data.ts`.
-- SEO:
-  - Extended `public/sitemap.xml` with article URLs.
-  - Kept canonical in `<head>` and dynamically update it on article detail.
-Tue Aug 19 07:44:10 AM WAT 2025: Enhanced certifications page with glassy dark mode effects and UI/UX improvements
-- Added glassy/transparent dark mode styling with backdrop-blur effects
-- Updated all cards, buttons, and form elements to use white/5-20 opacity backgrounds
-- Enhanced hover effects with increased opacity and blur for better visual feedback
-- Added cross-browser support with -webkit-backdrop-filter for Safari compatibility
+### Home Page Spacing Fix
+- **Added proper spacing** between CTA buttons and feature cards (pt-16)
+- **Improved visual hierarchy** and layout flow
+- **Better user experience** with clear content separation
 
-Tue Aug 19 07:54:45 AM WAT 2025: Fixed live deployment issues - CSP, particles.js, and font loading
-- Fixed Content Security Policy to allow inline scripts and Google Fonts
-- Downloaded particles.js locally and improved error handling
-- Replaced corrupted local font with Google Fonts Inter
+### Technical Improvements
+- **Glass morphism backgrounds** with backdrop-blur-md
+- **Enhanced hover states** and transitions throughout
+- **Color-coded mobile menu sections** for better organization
+- **Responsive design** improvements for all screen sizes
+- **Professional visual design** with modern UI/UX patterns
+
+## 2025-01-27 - Live Deployment Fixes
+
+### Content Security Policy (CSP) Updates
+- **Modified CSP** to allow unsafe-inline scripts and Google Fonts domains
+- **Updated script-src** to include 'unsafe-inline' and https://cdn.jsdelivr.net
+- **Added Google Fonts** domains to style-src and font-src
+- **Resolved CSP violations** that were blocking live deployment
+
+### Particles.js Background Fix
+- **Downloaded particles.min.js locally** to public/vendor/ directory
+- **Enhanced error handling** in particles-background.component.ts
+- **Added fallback mechanisms** for script loading failures
+- **Improved graceful degradation** when particles.js is unavailable
+
+### Font Loading Resolution
+- **Removed corrupted local font file** (public/fonts/Inter-Variable.woff2)
+- **Switched to Google Fonts CDN** for Inter font family
+- **Added preconnect links** for better font loading performance
+- **Resolved OTS parsing errors** that were preventing font display
+
+### Error Handling Improvements
+- **Enhanced particles-background.component.ts** with try-catch blocks
+- **Added console warnings** for debugging script loading issues
+- **Improved fallback behavior** when external resources fail to load
+- **Better user experience** during loading and error states
+
+## 2025-01-27 - Certifications Page UI/UX Enhancements
+
+### Visual Design Improvements
+- **Glassy dark mode** with transparent backgrounds and backdrop blur
+- **Enhanced animations** including staggered fade-in effects for cards
+- **Improved hover effects** with shimmer and ripple animations
+- **Better color consistency** across light and dark themes
+- **Professional card design** with enhanced shadows and borders
+
+### Interactive Features
+- **Search functionality** with real-time filtering
+- **Skill-based filtering** with dropdown selection
+- **Results counter** showing filtered certification count
+- **Clear filters button** for easy reset
+- **Enhanced button interactions** with smooth transitions
+
+### Mobile Responsiveness
+- **Improved mobile layout** with better touch targets
+- **Responsive grid system** that adapts to screen sizes
+- **Optimized spacing** for mobile devices
+- **Better typography scaling** across different screen sizes
+
+### Accessibility Enhancements
+- **Proper ARIA labels** for all interactive elements
+- **Keyboard navigation** support for all features
+- **Screen reader friendly** structure and content
+- **High contrast ratios** for better readability
+
+## 2025-01-27 - Software Engineer Role Update
+
+### Content Updates
+- **Updated role description** from "Frontend developer" to "Software Engineer"
+- **Enhanced meta tags** for better SEO with full-stack focus
+- **Updated work examples** to reflect broader technical capabilities
+- **Modified principles** to emphasize full-stack development approach
+- **Updated about page** to highlight Node.js and cloud technologies
+
+### SEO Improvements
+- **Updated meta descriptions** to reflect "Full-stack software engineering"
+- **Enhanced page titles** with "Software Engineer Portfolio"
+- **Improved keyword targeting** for broader technical roles
+- **Better social media meta tags** for LinkedIn and Twitter
+
+## 2025-01-27 - Certifications Page Creation
+
+### New Page Implementation
+- **Created certifications page** with standalone Angular component
+- **Added route configuration** for /certifications path
+- **Implemented certification data structure** with TypeScript interfaces
+- **Added navigation links** in header and footer
+
+### PDF Integration
+- **Organized certificate PDFs** in public/certificates/ directory
+- **Generated PNG thumbnails** from PDF files using pdftoppm
+- **Implemented PDF viewing** with proper file paths
+- **Added credential verification** links for each certification
+
+### Data Management
+- **Structured certification data** with comprehensive information
+- **Added skill tagging** for each certification
+- **Implemented filtering system** by skills and search terms
+- **Created responsive grid layout** for certification display
+
+## 2025-01-27 - Emoji to Icon Replacement
+
+### Icon Implementation
+- **Replaced all emojis** with inline SVG icons throughout the site
+- **Added semantic icons** for better accessibility
+- **Implemented consistent icon styling** across all pages
+- **Enhanced visual consistency** with professional iconography
+
+### Pages Updated
+- **Home page**: Replaced checkmark, zap, and users emojis
+- **Principles page**: Replaced target, compass, and globe emojis
+- **About page**: Updated with appropriate icons
+- **Work data**: Enhanced with relevant technical icons
+
+### Technical Approach
+- **Used inline SVG icons** for better control and performance
+- **Maintained accessibility** with proper ARIA labels
+- **Ensured cross-browser compatibility** with standard SVG elements
+- **Added hover effects** and transitions for better interactivity
 
