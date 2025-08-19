@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Self-hosted Inter font */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Apply Inter to body with system fallbacks */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
 /* Global reset and tokens */
 *,*::before,*::after{box-sizing:border-box}
 html,body{height:100%}
@@ -24,3 +38,6 @@ img{max-width:100%;height:auto;display:block}
 .prose-custom blockquote{ @apply border-l-4 border-gray-300 bg-gray-50/60 p-4 italic dark:border-gray-700 dark:bg-zinc-900/40; }
 .prose-custom img{ @apply rounded-md shadow; }
 .toc-card{ @apply sticky top-20 rounded-lg border border-gray-200 bg-white/70 p-4 backdrop-blur dark:border-gray-700 dark:bg-black/40; }
+
+/* Back to top floating button */
+.back-to-top{ @apply fixed bottom-6 right-4 z-40 hidden rounded-full border border-gray-300 bg-white/80 px-3 py-1 text-xs text-gray-800 backdrop-blur hover:bg-white dark:border-gray-700 dark:bg-black/60 dark:text-gray-100; }

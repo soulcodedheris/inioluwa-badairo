@@ -9,7 +9,9 @@
     "dev": "concurrently \"npm:start\" \"npm:watch:articles\"",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "lint": "echo 'Add Angular ESLint config' && exit 0",
+    "precommit": "npm run prebuild && npm run lint"
   },
   "prettier": {
     "overrides": [
@@ -35,28 +37,29 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "concurrently": "^9.1.0",
     "@angular/build": "^20.1.4",
     "@angular/cli": "^20.1.4",
     "@angular/compiler-cli": "^20.1.0",
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "@tailwindcss/typography": "^0.5.13",
     "@types/jasmine": "~5.1.0",
     "autoprefixer": "^10.4.21",
+    "cheerio": "^1.0.0",
+    "concurrently": "^9.1.0",
+    "gray-matter": "^4.0.3",
+    "image-size": "^1.1.1",
     "jasmine-core": "~5.8.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "gray-matter": "^4.0.3",
+    "postcss": "^8.5.6",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.0",
     "remark-html": "^16.0.1",
     "remark-slug": "^7.0.1",
-    "cheerio": "^1.0.0",
-    "image-size": "^1.1.1",
-    "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
-    "@tailwindcss/typography": "^0.5.13",
     "typescript": "~5.8.2"
   }
 }

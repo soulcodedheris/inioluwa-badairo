@@ -5,14 +5,15 @@
   <title>Portfolio</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="SoulCodedHeris · Purposeful front‑end for human‑centered products. Clear, soulful interfaces guided by culture and encouragement.">
-  <meta property="og:title" content="SoulCodedHeris · Portfolio">
-  <meta property="og:description" content="Purposeful front‑end for human‑centered products by Inioluwa Badairo.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'; font-src 'self' data: https:; frame-ancestors 'self'; form-action 'self'; base-uri 'self'">
+  <meta name="description" content="SoulCodedHeris · Full-stack software engineering for human‑centered products. Building scalable solutions with modern technologies and thoughtful design.">
+  <meta property="og:title" content="SoulCodedHeris · Software Engineer Portfolio">
+  <meta property="og:description" content="Full-stack software engineering for human‑centered products by Inioluwa Badairo.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="/soulcodedheris-logo.jpeg">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="SoulCodedHeris · Portfolio">
-  <meta name="twitter:description" content="Purposeful front‑end for human‑centered products.">
+  <meta name="twitter:title" content="SoulCodedHeris · Software Engineer Portfolio">
+  <meta name="twitter:description" content="Full-stack software engineering for human‑centered products.">
   <meta name="twitter:image" content="/soulcodedheris-logo.jpeg">
   <link rel="canonical" href="/">
   <link rel="preload" as="image" href="/soulcodedheris-logo.jpeg" imagesrcset="/soulcodedheris-logo.jpeg 1x" imagesizes="28px">
@@ -30,6 +31,22 @@
     })();
   </script>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <!-- Optional local font preload (place files in public/fonts/). Fallbacks to system stack if missing. -->
+  <link rel="preload" href="/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "SoulCodedHeris",
+    "url": "/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "/articles?query={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
 </head>
 <body>
   <app-root></app-root>

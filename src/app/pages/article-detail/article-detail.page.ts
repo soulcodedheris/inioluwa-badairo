@@ -2,13 +2,15 @@ import { Component, Inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DatePipe, DOCUMENT, NgClass } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { BreadcrumbsComponent } from '../../shared/breadcrumbs.component';
+import { BreadcrumbService } from '../../shared/breadcrumb.service';
 
 type Article = { title: string; date: string; summary: string; slug: string; html: string; status?: string; category?: string };
 
 @Component({
   selector: 'app-article-detail-page',
   standalone: true,
-  imports: [RouterLink, DatePipe, NgClass],
+  imports: [RouterLink, DatePipe, NgClass, BreadcrumbsComponent],
   templateUrl: './article-detail.page.html',
   styleUrl: './article-detail.page.css'
 })
@@ -16,14 +18,17 @@ export class ArticleDetailPage {
   article = signal<Article | null>(null);
   safeHtml = signal<string | null>(null);
   toc = signal<{ id: string; text: string }[]>([]);
+  copied = signal<boolean>(false);
   activeTocId = signal<string | null>(null);
   private scrollHandler?: () => void;
   private observer?: IntersectionObserver;
+  private intersectionObserver?: IntersectionObserver;
 
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
+    private breadcrumbs: BreadcrumbService
   ) {
     const slug = this.route.snapshot.paramMap.get('slug') || '';
     if (!slug) return;
@@ -34,6 +39,8 @@ export class ArticleDetailPage {
   copyUrl(): void {
     const url = this.document.location.href;
     navigator?.clipboard?.writeText(url).catch(() => {});
+    this.copied.set(true);
+    setTimeout(() => this.copied.set(false), 1200);
   }
 
   get twitterShareUrl(): string {
@@ -60,6 +67,8 @@ export class ArticleDetailPage {
             this.setMetaForArticle(found);
             this.setupReadingProgress();
             this.observeHeadings();
+            this.setupTocHighlight();
+            this.breadcrumbs.setDynamicLabel(this.document.location.pathname, found.title);
           });
         }
       },
@@ -232,6 +241,7 @@ export class ArticleDetailPage {
 
   private setupReadingProgress(): void {
     const bar = this.document.getElementById('read-progress');
+    const back = this.document.getElementById('back-to-articles');
     if (!bar) return;
     const onScroll = () => {
       const doc = this.document.documentElement;
@@ -240,6 +250,7 @@ export class ArticleDetailPage {
       const height = (doc.scrollHeight || body.scrollHeight) - doc.clientHeight;
       const pct = height > 0 ? (scrollTop / height) * 100 : 0;
       (bar as HTMLElement).style.width = `${pct}%`;
+      if (back) (back as HTMLElement).style.display = scrollTop > 600 ? 'inline-flex' : 'none';
     };
     this.scrollHandler = onScroll;
     this.document.addEventListener('scroll', onScroll, { passive: true });
@@ -261,6 +272,38 @@ export class ArticleDetailPage {
       if (pick) this.activeTocId.set(pick);
     }, { rootMargin: '-20% 0% -70% 0%', threshold: [0, 1] });
     headings.forEach(h => this.observer!.observe(h));
+  }
+
+  private setupTocHighlight(): void {
+    if (!this.toc().length) return;
+
+    this.intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            this.activeTocId.set(id);
+          }
+        });
+      },
+      { rootMargin: '-20% 0px -35% 0px' }
+    );
+
+    // Observe all headings that are in the TOC
+    this.toc().forEach((item) => {
+      const element = this.document.getElementById(item.id);
+      if (element) {
+        this.intersectionObserver!.observe(element);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.observer?.disconnect();
+    this.intersectionObserver?.disconnect();
+    if (this.scrollHandler) {
+      this.document.removeEventListener('scroll', this.scrollHandler);
+    }
   }
 }
 

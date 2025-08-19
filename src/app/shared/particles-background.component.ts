@@ -61,12 +61,15 @@ export class ParticlesBackgroundComponent implements AfterViewInit, OnDestroy {
       s.src = '/vendor/particles.min.js';
       s.async = true;
       s.crossOrigin = 'anonymous';
+      s.integrity = '';
       s.setAttribute('data-particlesjs', 'true');
       s.onload = () => resolve();
       s.onerror = () => {
         const cdn = document.createElement('script');
         cdn.src = 'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
         cdn.async = true;
+        cdn.crossOrigin = 'anonymous';
+        cdn.integrity = '';
         cdn.setAttribute('data-particlesjs', 'true');
         cdn.onload = () => resolve();
         cdn.onerror = () => resolve();
@@ -81,9 +84,12 @@ export class ParticlesBackgroundComponent implements AfterViewInit, OnDestroy {
     if (container) container.innerHTML = '';
     const dark = document.documentElement.classList.contains('dark');
     const color = dark ? '#ffffff' : '#111111';
+    const path = typeof window !== 'undefined' ? window.location.pathname : '/';
+    const reducedRoutes = ['/articles', '/work', '/principles'];
+    const particleCount = reducedRoutes.some(p => path.startsWith(p)) ? 40 : 80;
     const options = {
       particles: {
-        number: { value: 80, density: { enable: true, value_area: 800 } },
+        number: { value: particleCount, density: { enable: true, value_area: 800 } },
         color: { value: color },
         shape: { type: 'circle', stroke: { width: 0, color: '#000000' }, polygon: { nb_sides: 5 } },
         opacity: { value: 0.5, random: false, anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false } },

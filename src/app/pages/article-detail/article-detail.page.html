@@ -1,7 +1,9 @@
 <section class="mx-auto min-h-dvh w-full max-w-6xl px-6 py-12">
+  <app-breadcrumbs />
   <div class="fixed inset-x-0 top-0 z-40 h-0.5 bg-transparent">
     <div id="read-progress" class="h-full w-0 bg-gray-900 transition-[width] dark:bg-white"></div>
   </div>
+  <a id="back-to-articles" routerLink="/articles" class="fixed right-4 top-20 z-30 hidden rounded-full border border-gray-300 bg-white/80 px-3 py-1 text-xs text-gray-800 backdrop-blur hover:bg-white dark:border-gray-700 dark:bg-black/60 dark:text-gray-100">← Back to articles</a>
   <a routerLink="/articles" class="text-sm text-gray-600 hover:text-gray-900">← Back to articles</a>
 
   @if (article(); as art) {
@@ -13,8 +15,11 @@
         }
       </div>
       <p class="mt-2 text-sm text-gray-500">{{ art.date | date }}</p>
-      <div class="mt-3 flex gap-2">
+      <div class="mt-3 flex items-center gap-2">
         <button class="rounded border border-gray-300 px-2 py-1 text-xs text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-zinc-800" (click)="copyUrl()">Copy link</button>
+        @if (copied()) {
+          <span class="text-xs text-green-600">Copied</span>
+        }
         <a [href]="twitterShareUrl" target="_blank" rel="noopener" class="rounded border border-gray-300 px-2 py-1 text-xs text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-zinc-800">Twitter</a>
         <a [href]="linkedinShareUrl" target="_blank" rel="noopener" class="rounded border border-gray-300 px-2 py-1 text-xs text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-zinc-800">LinkedIn</a>
       </div>

@@ -53,3 +53,9 @@
 - SEO:
   - Extended `public/sitemap.xml` with article URLs.
   - Kept canonical in `<head>` and dynamically update it on article detail.
+Tue Aug 19 07:44:10 AM WAT 2025: Enhanced certifications page with glassy dark mode effects and UI/UX improvements
+- Added glassy/transparent dark mode styling with backdrop-blur effects
+- Updated all cards, buttons, and form elements to use white/5-20 opacity backgrounds
+- Enhanced hover effects with increased opacity and blur for better visual feedback
+- Added cross-browser support with -webkit-backdrop-filter for Safari compatibility
+

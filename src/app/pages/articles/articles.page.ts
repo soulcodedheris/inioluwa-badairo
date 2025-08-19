@@ -2,6 +2,7 @@ import { Component, effect, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
+import { BreadcrumbsComponent } from '../../shared/breadcrumbs.component';
 
 type Article = { title: string; date: string; summary: string; slug: string; html?: string; readMins?: number };
 
@@ -16,7 +17,7 @@ function estimateReadTime(html: string | undefined): number {
 @Component({
   selector: 'app-articles-page',
   standalone: true,
-  imports: [DatePipe, RouterLink],
+  imports: [DatePipe, RouterLink, BreadcrumbsComponent],
   templateUrl: './articles.page.html',
   styleUrl: './articles.page.css'
 })

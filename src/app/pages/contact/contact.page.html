@@ -1,23 +1,84 @@
 <section class="mx-auto min-h-dvh w-full max-w-xl px-6 py-16">
   <header class="mb-8">
-    <h1 class="text-3xl font-semibold sm:text-5xl">Let’s talk</h1>
+    <h1 class="text-3xl font-semibold sm:text-5xl">Let's talk</h1>
     <p class="mt-3 text-gray-600">New projects, freelance inquiry, or a coffee.</p>
   </header>
 
   <form (ngSubmit)="onSubmit()" #f="ngForm" class="space-y-4">
     <label class="block">
-      <span class="mb-1 block text-sm text-gray-700">Name</span>
-      <input class="w-full rounded border border-gray-300 px-3 py-2 outline-none focus:border-gray-400" name="name" [(ngModel)]="model.name" required />
+      <span class="mb-1 block text-sm text-gray-700 dark:text-gray-300">Name</span>
+      <input 
+        class="w-full rounded border px-3 py-2 outline-none transition-colors focus:border-gray-400 dark:bg-zinc-800 dark:focus:border-gray-600" 
+        [class.border-red-300]="f.submitted && !model.name"
+        [class.border-gray-300]="!f.submitted || model.name"
+        [class.dark:border-red-600]="f.submitted && !model.name"
+        [class.dark:border-gray-700]="!f.submitted || model.name"
+        name="name" 
+        [(ngModel)]="model.name" 
+        required 
+      />
+      @if (f.submitted && !model.name) {
+        <p class="mt-1 text-xs text-red-600 dark:text-red-400">Name is required</p>
+      }
     </label>
+    
     <label class="block">
-      <span class="mb-1 block text-sm text-gray-700">E-mail</span>
-      <input type="email" class="w-full rounded border border-gray-300 px-3 py-2 outline-none focus:border-gray-400" name="email" [(ngModel)]="model.email" required />
+      <span class="mb-1 block text-sm text-gray-700 dark:text-gray-300">E-mail</span>
+      <input 
+        type="email" 
+        class="w-full rounded border px-3 py-2 outline-none transition-colors focus:border-gray-400 dark:bg-zinc-800 dark:focus:border-gray-600" 
+        [class.border-red-300]="f.submitted && (!model.email || !isValidEmail(model.email))"
+        [class.border-gray-300]="!f.submitted || (model.email && isValidEmail(model.email))"
+        [class.dark:border-red-600]="f.submitted && (!model.email || !isValidEmail(model.email))"
+        [class.dark:border-gray-700]="!f.submitted || (model.email && isValidEmail(model.email))"
+        name="email" 
+        [(ngModel)]="model.email" 
+        required 
+      />
+      @if (f.submitted && !model.email) {
+        <p class="mt-1 text-xs text-red-600 dark:text-red-400">Email is required</p>
+      } @else if (f.submitted && model.email && !isValidEmail(model.email)) {
+        <p class="mt-1 text-xs text-red-600 dark:text-red-400">Please enter a valid email address</p>
+      } @else {
+        <p class="mt-1 text-xs text-gray-500">We'll reply within 48 hours.</p>
+      }
     </label>
+    
     <label class="block">
-      <span class="mb-1 block text-sm text-gray-700">Message</span>
-      <textarea rows="6" class="w-full rounded border border-gray-300 px-3 py-2 outline-none focus:border-gray-400" name="message" [(ngModel)]="model.message" required></textarea>
+      <span class="mb-1 block text-sm text-gray-700 dark:text-gray-300">Message</span>
+      <textarea 
+        rows="6" 
+        class="w-full rounded border px-3 py-2 outline-none transition-colors focus:border-gray-400 dark:bg-zinc-800 dark:focus:border-gray-600" 
+        [class.border-red-300]="f.submitted && !model.message"
+        [class.border-gray-300]="!f.submitted || model.message"
+        [class.dark:border-red-600]="f.submitted && !model.message"
+        [class.dark:border-gray-700]="!f.submitted || model.message"
+        name="message" 
+        [(ngModel)]="model.message" 
+        required
+      ></textarea>
+      @if (f.submitted && !model.message) {
+        <p class="mt-1 text-xs text-red-600 dark:text-red-400">Message is required</p>
+      }
     </label>
-    <button class="rounded bg-gray-900 px-4 py-2 text-white hover:bg-black" [disabled]="!f.form.valid">Send Message</button>
+    
+    <button 
+      class="rounded bg-gray-900 px-4 py-2 text-white hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed dark:bg-white dark:text-black dark:hover:bg-gray-200" 
+      [disabled]="submitting()"
+    >
+      @if (submitting()) {
+        Sending...
+      } @else {
+        Send Message
+      }
+    </button>
+
+    @if (success()) {
+      <p class="text-sm text-green-600 dark:text-green-400">Sent! Thank you for your message.</p>
+    }
+    @if (error()) {
+      <p class="text-sm text-red-600 dark:text-red-400">Failed to send message. Please try again later.</p>
+    }
   </form>
 </section>
 
