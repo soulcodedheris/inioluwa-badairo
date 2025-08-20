@@ -1,23 +1,25 @@
-<section class="grid min-h-dvh grid-rows-[1fr_auto]">
-  <div class="mx-auto grid w-full max-w-6xl items-center gap-8 px-6 text-center sm:grid-cols-[1.2fr_1fr] sm:text-left" appAppear>
+<section class="grid min-h-[calc(100dvh-var(--header-h,0px))] place-items-center">
+  <div class="mx-auto grid w-full max-w-6xl items-center gap-8 px-6 text-center sm:grid-cols-[1.2fr_1fr] sm:text-left hero-animate" appAppear>
     <div>
-      <p class="text-xs uppercase tracking-widest text-gray-500">Heris (Inioluwa) · Software Engineer</p>
-      <h1 class="mt-4 text-balance text-4xl font-semibold leading-tight text-gray-900 dark:text-gray-100 sm:text-6xl">Building purposeful software for human‑centered products</h1>
+      <p class="text-xs uppercase tracking-widest text-gray-500 hero-line-1">Heris (Inioluwa) · Software Engineer</p>
+      <h1 class="mt-4 text-balance text-4xl font-semibold leading-tight text-gray-900 dark:text-gray-100 sm:text-6xl hero-line-2">Building purposeful software for human‑centered products</h1>
       <p class="mt-4 max-w-2xl text-pretty text-gray-600 dark:text-gray-300">I craft full-stack solutions with Angular/React, Node.js, and cloud technologies. From frontend interfaces to backend systems, I focus on clarity, performance, and thoughtful user experiences. New writing weekly.</p>
       <div class="mt-8 flex flex-wrap items-center justify-center gap-3 sm:justify-start">
         <a routerLink="/work" class="rounded bg-gray-900 px-4 py-2 text-white hover:bg-black dark:bg-white dark:text-black dark:hover:bg-gray-200">View Work</a>
-        <a routerLink="/certifications" class="rounded border border-gray-300 px-4 py-2 text-gray-800 hover:bg-gray-100 dark:text-gray-100 dark:border-gray-700 dark:hover:bg-gray-800">Certifications</a>
         <a routerLink="/articles" class="rounded border border-gray-300 px-4 py-2 text-gray-800 hover:bg-gray-100 dark:text-gray-100 dark:border-gray-700 dark:hover:bg-gray-800">Read Articles</a>
+        <a routerLink="/contact" class="rounded border border-gray-300 px-4 py-2 text-gray-800 hover:bg-gray-100 dark:text-gray-100 dark:border-gray-700 dark:hover:bg-gray-800">Get in touch</a>
       </div>
     </div>
     <div class="relative mx-auto h-56 w-56 overflow-hidden rounded-xl border border-gray-200 shadow-sm sm:mx-0 sm:h-80 sm:w-80 dark:border-gray-700" aria-hidden="true">
-      <img src="/Heris-halfbody.JPG" alt="Inioluwa Badairo half body" class="h-full w-full object-cover" fetchpriority="high" loading="eager" decoding="async" sizes="(min-width: 640px) 20rem, 14rem" />
+      <img src="/Heris-halfbody.JPG" alt="Inioluwa Badairo half body" class="h-full w-full object-cover" fetchpriority="high" loading="eager" decoding="async" sizes="(min-width: 640px) 20rem, 14rem" width="640" height="640" />
     </div>
   </div>
+</section>
 
-  <div class="mx-auto w-full max-w-6xl px-6 pb-12 pt-16" appAppear>
+<section class="mx-auto w-full max-w-6xl px-6 pb-12 pt-8 lg:pt-10 lg:-mt-8 xl:-mt-12" appAppear>
     <ul class="grid grid-cols-1 gap-6 sm:grid-cols-3">
-      <li class="group rounded-lg border border-gray-200 p-4 transition dark:border-gray-700">
+      <li>
+        <a routerLink="/principles" [fragment]="'system-thinking'" class="group block rounded-lg border border-gray-200 p-4 transition hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-zinc-900/40">
         <div class="flex items-start gap-3">
           <span class="mt-1 inline-flex h-6 w-6 items-center justify-center rounded bg-gray-100 text-gray-700 dark:bg-zinc-800 dark:text-gray-200">
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -29,8 +31,10 @@
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Architect solutions that scale. Design for clarity and maintainability.</p>
           </div>
         </div>
+        </a>
       </li>
-      <li class="group rounded-lg border border-gray-200 p-4 transition dark:border-gray-700">
+      <li>
+        <a routerLink="/principles" [fragment]="'performance'" class="group block rounded-lg border border-gray-200 p-4 transition hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-zinc-900/40">
         <div class="flex items-start gap-3">
           <span class="mt-1 inline-flex h-6 w-6 items-center justify-center rounded bg-gray-100 text-gray-700 dark:bg-zinc-800 dark:text-gray-200">
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -42,8 +46,10 @@
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Build robust systems. Optimize for speed and stability.</p>
           </div>
         </div>
+        </a>
       </li>
-      <li class="group rounded-lg border border-gray-200 p-4 transition dark:border-gray-700">
+      <li>
+        <a routerLink="/principles" [fragment]="'user-centered'" class="group block rounded-lg border border-gray-200 p-4 transition hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-zinc-900/40">
         <div class="flex items-start gap-3">
           <span class="mt-1 inline-flex h-6 w-6 items-center justify-center rounded bg-gray-100 text-gray-700 dark:bg-zinc-800 dark:text-gray-200">
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -55,9 +61,9 @@
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">Empathy-driven development. Build for real people and their needs.</p>
           </div>
         </div>
+        </a>
       </li>
     </ul>
-  </div>
 </section>
 
 

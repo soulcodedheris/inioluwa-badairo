@@ -27,6 +27,18 @@
 
     <div class="mt-8 grid grid-cols-1 gap-8 md:grid-cols-[1.15fr_260px]">
       <article id="article-content" class="prose-custom" [innerHTML]="safeHtml()"></article>
+      @if (related().length) {
+      <section class="mt-8 space-y-3">
+        <h2 class="text-xl font-semibold">Related</h2>
+        <ul class="space-y-1 text-sm text-gray-600 dark:text-gray-300">
+          @for (r of related(); track r.slug) {
+            <li>
+              <a [routerLink]="['/articles', r.slug]" class="underline">{{ r.title }}</a>
+            </li>
+          }
+        </ul>
+      </section>
+      }
       <nav class="toc-card hidden self-start md:block">
         <p class="text-xs uppercase tracking-widest text-gray-500">On this page</p>
         <ul class="mt-3 space-y-2">

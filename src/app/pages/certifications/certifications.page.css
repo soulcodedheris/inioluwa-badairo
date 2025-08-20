@@ -167,7 +167,7 @@
 
 /* Dark mode enhancements */
 .dark .certification-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.05); /* subtle glass */
   border-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(12px);
 }

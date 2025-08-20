@@ -3,6 +3,8 @@ export type WorkItem = {
   title: string;
   blurb: string;
   tags: string[];
+  role?: string;
+  resultPct?: number;
 };
 
 export const WORK_ITEMS: WorkItem[] = [
@@ -10,25 +12,33 @@ export const WORK_ITEMS: WorkItem[] = [
     slug: 'example-case',
     title: 'Full-Stack E-commerce Platform',
     blurb: 'Built scalable e-commerce solution with microservices architecture. Increased performance by 40% and reduced deployment time by 60%.',
-    tags: ['Angular', 'Node.js', 'Microservices', 'Performance']
+    tags: ['Angular', 'Node.js', 'Microservices', 'Performance'],
+    role: 'Lead Engineer',
+    resultPct: 40
   },
   {
     slug: 'market-dashboard',
     title: 'Real-time Analytics Dashboard',
     blurb: 'Developed real-time data processing pipeline with WebSocket connections and Redis caching. Time-to-insight down 35%.',
-    tags: ['Angular', 'Node.js', 'WebSockets', 'Redis']
+    tags: ['Angular', 'Node.js', 'WebSockets', 'Redis'],
+    role: 'Full‑stack Engineer',
+    resultPct: 35
   },
   {
     slug: 'onboarding-flow',
     title: 'API-First User Onboarding',
     blurb: 'Designed RESTful APIs and progressive web app for seamless user onboarding. Increased completion by 18% and reduced support tickets.',
-    tags: ['API Design', 'React', 'Node.js', 'Analytics']
+    tags: ['API Design', 'React', 'Node.js', 'Analytics'],
+    role: 'API Engineer',
+    resultPct: 18
   },
   {
     slug: 'design-system',
     title: 'Enterprise Design System',
     blurb: 'Architected component library with comprehensive documentation and automated testing. Scaled across 5 development teams.',
-    tags: ['Design System', 'TypeScript', 'Testing', 'Documentation']
+    tags: ['Design System', 'TypeScript', 'Testing', 'Documentation'],
+    role: 'Architect',
+    resultPct: 100
   }
 ];
 

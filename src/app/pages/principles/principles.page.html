@@ -1,8 +1,13 @@
 <section class="mx-auto min-h-dvh w-full max-w-3xl px-6 py-16">
   <app-breadcrumbs />
   <h1 class="text-3xl font-semibold sm:text-5xl">Principles</h1>
+  <nav class="sticky top-20 z-10 mt-6 flex flex-wrap gap-2">
+    <a href="#system-thinking" class="rounded-full border px-3 py-1 text-xs">System thinking</a>
+    <a href="#performance" class="rounded-full border px-3 py-1 text-xs">Performance</a>
+    <a href="#user-centered" class="rounded-full border px-3 py-1 text-xs">User-centered</a>
+  </nav>
   <ol class="mt-8 space-y-4">
-    <li class="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
+    <li id="system-thinking" class="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
       <div class="flex items-start gap-3">
         <span aria-hidden="true">
           <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -12,7 +17,7 @@
         <p><strong>Architecture over implementation.</strong> Design systems that scale. Focus on maintainability and performance.</p>
       </div>
     </li>
-    <li class="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
+    <li id="performance" class="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
       <div class="flex items-start gap-3">
         <span aria-hidden="true">
           <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -22,7 +27,7 @@
         <p><strong>Problem-solving mindset.</strong> Understand the core problem before writing code. Build solutions that address real needs.</p>
       </div>
     </li>
-    <li class="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
+    <li id="user-centered" class="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
       <div class="flex items-start gap-3">
         <span aria-hidden="true">
           <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

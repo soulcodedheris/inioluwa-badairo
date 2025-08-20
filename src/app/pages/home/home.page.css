@@ -1,3 +1,14 @@
-/* Reserved for component-specific tweaks if needed later */
+/* Ensure first section fills the viewport minus the header */
+:root {
+  --header-h: 0px;
+}
 
+
+.hero-line-1, .hero-line-2{
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all .6s ease;
+}
+.hero-animate .hero-line-1{ opacity:1; transform:none; }
+.hero-animate .hero-line-2{ opacity:1; transform:none; transition-delay:.12s; }
 

@@ -27,6 +27,11 @@ export const routes: Routes = [
     data: { breadcrumb: 'Playground' }
   },
   {
+    path: 'playground/:slug',
+    loadComponent: () => import('./pages/playground/demo.page').then(m => m.DemoPage),
+    data: { breadcrumb: 'Demo' }
+  },
+  {
     path: 'articles',
     loadComponent: () => import('./pages/articles/articles.page').then(m => m.ArticlesPage),
     data: { breadcrumb: 'Articles' }

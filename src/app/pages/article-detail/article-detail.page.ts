@@ -16,6 +16,7 @@ type Article = { title: string; date: string; summary: string; slug: string; htm
 })
 export class ArticleDetailPage {
   article = signal<Article | null>(null);
+  related = signal<Article[]>([]);
   safeHtml = signal<string | null>(null);
   toc = signal<{ id: string; text: string }[]>([]);
   copied = signal<boolean>(false);
@@ -57,7 +58,8 @@ export class ArticleDetailPage {
   private loadFromJson(slug: string): void {
     this.http.get<Article[]>(`/assets/articles.json`).subscribe({
       next: (list) => {
-        const found = (list || []).find(a => a.slug === slug) || null;
+        const listArr = list || [];
+        const found = listArr.find(a => a.slug === slug) || null;
         this.article.set(found);
         if (found) {
           // Prepare and sanitize HTML, update TOC and metadata
@@ -69,6 +71,12 @@ export class ArticleDetailPage {
             this.observeHeadings();
             this.setupTocHighlight();
             this.breadcrumbs.setDynamicLabel(this.document.location.pathname, found.title);
+            // compute related by category or fallback to most recent
+            const related = listArr
+              .filter(a => a.slug !== found.slug)
+              .filter(a => (found as any).category ? (a as any).category === (found as any).category : true)
+              .slice(0, 3);
+            this.related.set(related);
           });
         }
       },
@@ -80,7 +88,7 @@ export class ArticleDetailPage {
     const div = this.document.createElement('div');
     div.innerHTML = found.html || '';
 
-    // Add ids to h2 headings and build TOC
+    // Add ids to h2 headings and build TOC; add copy-link button
     const headings = Array.from(div.querySelectorAll('h2')) as HTMLHeadingElement[];
     const items: { id: string; text: string }[] = [];
     headings.forEach((h, i) => {
@@ -90,6 +98,24 @@ export class ArticleDetailPage {
         h.id = id;
       }
       items.push({ id: h.id, text: h.textContent || `Section ${i + 1}` });
+
+      // Add a small copy-link control
+      try {
+        const btn = div.ownerDocument?.createElement('button') || document.createElement('button');
+        btn.setAttribute('type', 'button');
+        btn.setAttribute('data-copy-anchor', h.id);
+        btn.textContent = '¶';
+        btn.style.marginLeft = '8px';
+        btn.style.opacity = '0.6';
+        btn.style.fontSize = '0.8em';
+        btn.addEventListener?.('click', () => {
+          try {
+            const url = `${this.document.location.origin}${this.document.location.pathname}#${h.id}`;
+            navigator?.clipboard?.writeText(url);
+          } catch {}
+        });
+        h.appendChild(btn);
+      } catch {}
     });
     this.toc.set(items);
 
@@ -98,6 +124,26 @@ export class ArticleDetailPage {
     imgs.forEach(img => {
       if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
       if (!img.getAttribute('decoding')) img.setAttribute('decoding', 'async');
+    });
+
+    // Add copy buttons to code blocks
+    const pres = Array.from(div.querySelectorAll('pre')) as HTMLElement[];
+    pres.forEach((pre, i) => {
+      try {
+        const btn = div.ownerDocument?.createElement('button') || document.createElement('button');
+        btn.textContent = 'Copy';
+        btn.setAttribute('type', 'button');
+        btn.style.float = 'right';
+        btn.style.margin = '4px';
+        btn.style.fontSize = '0.75rem';
+        btn.addEventListener?.('click', () => {
+          try {
+            const code = pre.innerText || '';
+            navigator?.clipboard?.writeText(code);
+          } catch {}
+        });
+        pre.prepend(btn);
+      } catch {}
     });
 
     // External links harden

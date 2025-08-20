@@ -1,15 +1,16 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { BreadcrumbsComponent } from '../../shared/breadcrumbs.component';
 
 @Component({
   selector: 'app-contact-page',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, BreadcrumbsComponent],
   templateUrl: './contact.page.html',
   styleUrls: ['./contact.page.css']
 })
 export class ContactPage {
-  model = { name: '', email: '', message: '' };
+  model: { name: string; email: string; message: string; website?: string } = { name: '', email: '', message: '' };
   submitting = signal(false);
   success = signal(false);
   error = signal(false);
@@ -25,6 +26,11 @@ export class ContactPage {
     this.error.set(false);
 
     try {
+      if ((this.model.website || '').trim()) {
+        // Honeypot triggered; pretend success to bots, no action
+        this.success.set(true);
+        return;
+      }
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       this.success.set(true);

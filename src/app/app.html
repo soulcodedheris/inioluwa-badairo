@@ -1,11 +1,12 @@
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-white focus:px-3 focus:py-2 focus:text-black dark:focus:bg-black dark:focus:text-white">Skip to content</a>
 
-<header class="sticky top-0 z-50 flex items-center justify-between px-4 py-4 bg-white/95 backdrop-blur-md dark:bg-black/95 border-b border-gray-200/50 dark:border-gray-800/50 shadow-sm" role="banner">
+<header class="sticky top-0 z-[60] flex items-center justify-between px-4 py-4 transition-all duration-300 bg-transparent dark:bg-transparent" role="banner"
+        [ngClass]="{ 'bg-white/70 dark:bg-black/60 backdrop-blur-md ring-1 ring-black/5 dark:ring-white/10 shadow-sm': scrolled() }">
   <!-- Logo Section -->
   <div class="flex items-center">
     <a routerLink="/" class="inline-flex items-center gap-3 no-underline group" aria-label="SoulCodedHeris home">
       <div class="relative">
-        <img src="/soulcodedheris-logo.jpeg" alt="SoulCodedHeris logo" class="h-8 w-auto transition-transform group-hover:scale-105" />
+        <img src="/soulcodedheris-logo.jpeg" alt="SoulCodedHeris logo" class="h-8 w-auto transition-transform group-hover:scale-105" width="128" height="128" />
         <div class="absolute inset-0 rounded-full bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
       </div>
       <span class="hidden sm:inline-block text-lg font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">SoulCodedHeris</span>
@@ -16,21 +17,21 @@
   <nav class="hidden lg:flex items-center gap-6" aria-label="Primary">
     <!-- Portfolio Section -->
     <div class="flex items-center gap-1">
-      <a routerLink="/work" routerLinkActive="active" #workRla="routerLinkActive" [attr.aria-current]="workRla.isActive ? 'page' : null" class="relative text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-gray-300 dark:hover:text-white dark:focus-visible:ring-blue-400 after:absolute after:inset-x-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-blue-600 after:opacity-0 after:transition-opacity dark:after:bg-blue-400" [ngClass]="{ 'after:opacity-100 text-blue-600 dark:text-blue-400': workRla.isActive }">Work</a>
-      <a routerLink="/playground" routerLinkActive="active" #playRla="routerLinkActive" [attr.aria-current]="playRla.isActive ? 'page' : null" class="relative text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-gray-300 dark:hover:text-white dark:focus-visible:ring-blue-400 after:absolute after:inset-x-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-blue-600 after:opacity-0 after:transition-opacity dark:after:bg-blue-400" [ngClass]="{ 'after:opacity-100 text-blue-600 dark:text-blue-400': playRla.isActive }">Playground</a>
+      <a routerLink="/work" appPrefetchRoute="/work" routerLinkActive="active" #workRla="routerLinkActive" [attr.aria-current]="workRla.isActive ? 'page' : null" class="relative text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-gray-300 dark:hover:text-white dark:focus-visible:ring-blue-400 after:absolute after:inset-x-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-blue-600 after:opacity-0 after:transition-opacity dark:after:bg-blue-400" [ngClass]="{ 'after:opacity-100 text-blue-600 dark:text-blue-400': workRla.isActive }">Work</a>
+      <a routerLink="/playground" appPrefetchRoute="/playground" routerLinkActive="active" #playRla="routerLinkActive" [attr.aria-current]="playRla.isActive ? 'page' : null" class="relative text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-gray-300 dark:hover:text-white dark:focus-visible:ring-blue-400 after:absolute after:inset-x-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-blue-600 after:opacity-0 after:transition-opacity dark:after:bg-blue-400" [ngClass]="{ 'after:opacity-100 text-blue-600 dark:text-blue-400': playRla.isActive }">Playground</a>
     </div>
     
     <!-- Knowledge Section -->
     <div class="flex items-center gap-1">
-      <a routerLink="/articles" routerLinkActive="active" #artRla="routerLinkActive" [attr.aria-current]="artRla.isActive ? 'page' : null" class="relative text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-gray-300 dark:hover:text-white dark:focus-visible:ring-blue-400 after:absolute after:inset-x-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-blue-600 after:opacity-0 after:transition-opacity dark:after:bg-blue-400" [ngClass]="{ 'after:opacity-100 text-blue-600 dark:text-blue-400': artRla.isActive }">Articles</a>
-      <a routerLink="/principles" routerLinkActive="active" #priRla="routerLinkActive" [attr.aria-current]="priRla.isActive ? 'page' : null" class="relative text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-gray-300 dark:hover:text-white dark:focus-visible:ring-blue-400 after:absolute after:inset-x-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-blue-600 after:opacity-0 after:transition-opacity dark:after:bg-blue-400" [ngClass]="{ 'after:opacity-100 text-blue-600 dark:text-blue-400': priRla.isActive }">Principles</a>
-      <a routerLink="/certifications" routerLinkActive="active" #certRla="routerLinkActive" [attr.aria-current]="certRla.isActive ? 'page' : null" class="relative text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-gray-300 dark:hover:text-white dark:focus-visible:ring-blue-400 after:absolute after:inset-x-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-blue-600 after:opacity-0 after:transition-opacity dark:after:bg-blue-400" [ngClass]="{ 'after:opacity-100 text-blue-600 dark:text-blue-400': certRla.isActive }">Certifications</a>
+      <a routerLink="/articles" appPrefetchRoute="/articles" routerLinkActive="active" #artRla="routerLinkActive" [attr.aria-current]="artRla.isActive ? 'page' : null" class="relative text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-gray-300 dark:hover:text-white dark:focus-visible:ring-blue-400 after:absolute after:inset-x-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-blue-600 after:opacity-0 after:transition-opacity dark:after:bg-blue-400" [ngClass]="{ 'after:opacity-100 text-blue-600 dark:text-blue-400': artRla.isActive }">Articles</a>
+      <a routerLink="/principles" appPrefetchRoute="/principles" routerLinkActive="active" #priRla="routerLinkActive" [attr.aria-current]="priRla.isActive ? 'page' : null" class="relative text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-gray-300 dark:hover:text-white dark:focus-visible:ring-blue-400 after:absolute after:inset-x-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-blue-600 after:opacity-0 after:transition-opacity dark:after:bg-blue-400" [ngClass]="{ 'after:opacity-100 text-blue-600 dark:text-blue-400': priRla.isActive }">Principles</a>
+      <a routerLink="/certifications" appPrefetchRoute="/certifications" routerLinkActive="active" #certRla="routerLinkActive" [attr.aria-current]="certRla.isActive ? 'page' : null" class="relative text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-gray-300 dark:hover:text-white dark:focus-visible:ring-blue-400 after:absolute after:inset-x-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-blue-600 after:opacity-0 after:transition-opacity dark:after:bg-blue-400" [ngClass]="{ 'after:opacity-100 text-blue-600 dark:text-blue-400': certRla.isActive }">Certifications</a>
     </div>
     
     <!-- About Section -->
     <div class="flex items-center gap-1">
-      <a routerLink="/about" routerLinkActive="active" #abtRla="routerLinkActive" [attr.aria-current]="abtRla.isActive ? 'page' : null" class="relative text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-gray-300 dark:hover:text-white dark:focus-visible:ring-blue-400 after:absolute after:inset-x-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-blue-600 after:opacity-0 after:transition-opacity dark:after:bg-blue-400" [ngClass]="{ 'after:opacity-100 text-blue-600 dark:text-blue-400': abtRla.isActive }">About</a>
-      <a routerLink="/contact" routerLinkActive="active" #conRla="routerLinkActive" [attr.aria-current]="conRla.isActive ? 'page' : null" class="relative text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-gray-300 dark:hover:text-white dark:focus-visible:ring-blue-400 after:absolute after:inset-x-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-blue-600 after:opacity-0 after:transition-opacity dark:after:bg-blue-400" [ngClass]="{ 'after:opacity-100 text-blue-600 dark:text-blue-400': conRla.isActive }">Contact</a>
+      <a routerLink="/about" appPrefetchRoute="/about" routerLinkActive="active" #abtRla="routerLinkActive" [attr.aria-current]="abtRla.isActive ? 'page' : null" class="relative text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-gray-300 dark:hover:text-white dark:focus-visible:ring-blue-400 after:absolute after:inset-x-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-blue-600 after:opacity-0 after:transition-opacity dark:after:bg-blue-400" [ngClass]="{ 'after:opacity-100 text-blue-600 dark:text-blue-400': abtRla.isActive }">About</a>
+      <a routerLink="/contact" appPrefetchRoute="/contact" routerLinkActive="active" #conRla="routerLinkActive" [attr.aria-current]="conRla.isActive ? 'page' : null" class="relative text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:text-gray-300 dark:hover:text-white dark:focus-visible:ring-blue-400 after:absolute after:inset-x-3 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-blue-600 after:opacity-0 after:transition-opacity dark:after:bg-blue-400" [ngClass]="{ 'after:opacity-100 text-blue-600 dark:text-blue-400': conRla.isActive }">Contact</a>
     </div>
   </nav>
   
@@ -76,7 +77,7 @@
       <!-- Mobile Menu Header -->
       <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
         <div class="flex items-center gap-3">
-          <img src="/soulcodedheris-logo.jpeg" alt="SoulCodedHeris logo" class="h-8 w-auto" />
+          <img src="/soulcodedheris-logo.jpeg" alt="SoulCodedHeris logo" class="h-8 w-auto" width="128" height="128" />
           <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Menu</h2>
         </div>
         <button class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" (click)="closeMobileNav()" aria-label="Close menu">
@@ -230,7 +231,7 @@
   <button id="backToTop" class="back-to-top" aria-label="Back to top" (click)="scrollToTop()">↑ Top</button>
 </main>
 
-<footer class="mt-12 border-t border-gray-200 bg-white px-6 py-10 text-sm text-gray-600 dark:border-gray-800 dark:bg-black dark:text-gray-300">
+<footer class="border-t border-gray-200 bg-white px-6 pt-12 pb-10 text-sm text-gray-600 dark:border-gray-800 dark:bg-black dark:text-gray-300">
   <div class="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-6 md:flex-row md:items-center">
     <div class="space-x-4">
       <a routerLink="/" class="hover:underline">Home</a>
@@ -244,6 +245,24 @@
       <button class="rounded border border-gray-300 px-2 py-1 text-xs hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-zinc-800" (click)="toggleTheme()">Theme</button>
       <button class="rounded border border-gray-300 px-2 py-1 text-xs hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-zinc-800" (click)="toggleMotion()">Motion</button>
     </div>
+  </div>
+  <div class="mx-auto mt-6 w-full max-w-6xl grid gap-4 md:grid-cols-2">
+    <div class="text-xs text-gray-500 dark:text-gray-400">
+      <div class="font-medium mb-1">Colophon</div>
+      Built with Angular, Tailwind, and TypeScript. Hosted statically. Inter font. Particles respect reduced motion.
+    </div>
+    <nav class="text-xs text-gray-500 dark:text-gray-400">
+      <div class="font-medium mb-1">Sitemap</div>
+      <ul class="grid grid-cols-2 gap-1">
+        <li><a routerLink="/" class="hover:underline">Home</a></li>
+        <li><a routerLink="/articles" class="hover:underline">Articles</a></li>
+        <li><a routerLink="/work" class="hover:underline">Work</a></li>
+        <li><a routerLink="/principles" class="hover:underline">Principles</a></li>
+        <li><a routerLink="/certifications" class="hover:underline">Certifications</a></li>
+        <li><a routerLink="/about" class="hover:underline">About</a></li>
+        <li><a routerLink="/contact" class="hover:underline">Contact</a></li>
+      </ul>
+    </nav>
   </div>
   <div class="mx-auto mt-4 w-full max-w-6xl text-xs text-gray-500 dark:text-gray-400">© Heris, 2025 · Building clear, human‑first products.</div>
 </footer>

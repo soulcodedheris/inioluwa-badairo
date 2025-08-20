@@ -131,3 +131,74 @@
 - **Ensured cross-browser compatibility** with standard SVG elements
 - **Added hover effects** and transitions for better interactivity
 
+## 2025-08-20 - Header/Overlap Fixes, Glass Scroll, and 100dvh Hero
+
+### Visual and Layout Fixes
+- **Transparent header at top**; removed solid background, border, and shadow by default
+- **Glass/blur on scroll**; header now applies `backdrop-blur`, semi‑transparent background, subtle ring, and shadow when the page is scrolled
+- **Raised header z-index** to ensure it always layers above content and particles
+- **Removed white horizontal strip** by switching footer top spacing from margin to padding to avoid margin-collapsing
+- **Dark-mode body background** set to black so a transparent header doesn’t reveal white
+
+### Home Hero Height
+- **Hero fills the viewport**: first section uses `min-h-[calc(100dvh-var(--header-h,0px))]`
+- **Dynamic header height CSS variable** `--header-h` set and updated on load/resize in `app.ts`
+- **Separated sections**: hero stays full-height; features moved to a following section
+
+### Accessibility/UX
+- **Scroll state signal** added; gentle transitions for header state changes
+- **Back-to-top visibility** tied to scroll position; remains accessible
+
+### Files Touched
+- `src/app/app.html`: header transparency, glass-on-scroll classes, footer spacing, main landmark retained
+- `src/app/app.ts`: `scrolled` signal, unified scroll handler, `--header-h` updater
+- `src/app/pages/home/home.page.html`: hero min-height and section split
+- `src/app/pages/home/home.page.css`: default `--header-h` declaration
+- `src/styles.css`: `.dark body` background; minor z-index note for layering
+
+## 2025-08-20 - Planned Improvements (next)
+
+### Accessibility & Forms
+- **Add explicit button type** for contact form submit (`type="submit"`) to prevent accidental form behavior
+
+### Performance & CLS Reduction
+- **Add intrinsic size** (`width`/`height`) to static images (logo, headshot, hero) to reduce layout shift
+
+### SEO Enhancements
+- **Per-route titles and meta** for core pages (Work, Articles list, About, Principles, Contact, Certifications, Playground) via a small meta service hooked to router events
+
+## 2025-08-20 - Playground, Articles, Home spacing, Principles, Footer
+
+### Playground
+- **Demo catalog** with tags and chip filters
+- **Per-demo pages** at `/playground/:slug` (placeholder content wired)
+- **Card links** navigate to the correct demo
+
+### Articles
+- **Search + sort** (Newest/Shortest) with live filtering
+- **Category chips** with multi-select; clear button
+- **Related posts** section on article detail (by category)
+- **Copy**: heading anchors and code-block copy buttons
+
+### Home
+- **Tighter hero/feature spacing** across breakpoints; removed overlap on tablets
+- **Hero micro‑animation** (staggered subtitle/headline)
+
+### Principles
+- **Sticky in‑page tab nav** and **fragment anchors** to match Home feature links
+
+### Footer
+- **Colophon** (stack/hosting/fonts) and **compact sitemap**
+
+### Contact & Certifications
+- **Honeypot** anti‑spam field and success panel
+- **Cert thumbnails** now have intrinsic size + lazy/async (reduced CLS)
+
+### Navigation & Performance
+- **Route prefetch directive** used on top‑nav links
+
+### Fixes
+- **About page buttons**: imported `RouterLink` so CTA links work
+- **Playground filter build error**: moved `new Set()` to a `clear()` method
+- **General lint/parse errors** fixed; current state builds clean locally
+
