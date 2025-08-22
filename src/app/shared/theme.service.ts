@@ -11,16 +11,12 @@ export class ThemeService {
   init(): void {
     const dark = this.isDark();
     this.apply(dark);
-    // Debug: log theme state
-    console.log('Theme initialized:', dark ? 'dark' : 'light');
   }
 
   toggle(): void {
     const next = !document.documentElement.classList.contains('dark');
     this.apply(next);
     try { localStorage.setItem('theme', next ? 'dark' : 'light'); } catch {}
-    // Debug: log toggle
-    console.log('Theme toggled to:', next ? 'dark' : 'light');
   }
 
   private apply(dark: boolean): void {
