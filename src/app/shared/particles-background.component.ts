@@ -21,13 +21,17 @@ export class ParticlesBackgroundComponent implements AfterViewInit, OnDestroy {
   constructor(private host: ElementRef<HTMLElement>, private zone: NgZone) {}
 
   async ngAfterViewInit(): Promise<void> {
-    // Initial render if motion enabled
-    if (this.motionEnabled) {
-      await this.ensureLibrary();
-      this.render();
-    } else {
-      this.clear();
-    }
+    // Initial render if motion enabled (defer via requestIdleCallback if available)
+    const start = async () => {
+      if (this.motionEnabled) {
+        await this.ensureLibrary();
+        this.render();
+      } else {
+        this.clear();
+      }
+    };
+    const ric = (window as any).requestIdleCallback as ((cb: () => void, opts?: any) => any) | undefined;
+    if (typeof ric === 'function') ric(() => start()); else setTimeout(() => start(), 0);
 
     // Re-render when theme or motion changes (class or data-motion on <html>)
     this.themeObserver = new MutationObserver(async () => {
@@ -35,8 +39,9 @@ export class ParticlesBackgroundComponent implements AfterViewInit, OnDestroy {
         this.clear();
         return;
       }
-      await this.ensureLibrary();
-      this.render();
+      const run = async () => { await this.ensureLibrary(); this.render(); };
+      const ric2 = (window as any).requestIdleCallback as ((cb: () => void, opts?: any) => any) | undefined;
+      if (typeof ric2 === 'function') ric2(() => run()); else setTimeout(() => run(), 0);
     });
     this.themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'data-motion'] });
   }
@@ -68,18 +73,8 @@ export class ParticlesBackgroundComponent implements AfterViewInit, OnDestroy {
       
       s.onload = () => resolve();
       s.onerror = () => {
-        console.warn('Local particles.js failed, trying CDN...');
-        const cdn = document.createElement('script');
-        cdn.src = 'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
-        cdn.async = true;
-        cdn.crossOrigin = 'anonymous';
-        cdn.setAttribute('data-particlesjs', 'true');
-        cdn.onload = () => resolve();
-        cdn.onerror = () => {
-          console.warn('Particles.js failed to load, disabling particles background');
-          resolve(); // Don't reject, just disable particles
-        };
-        document.head.appendChild(cdn);
+        console.warn('particles.min.js failed to load; disabling particles background');
+        resolve();
       };
       document.head.appendChild(s);
     });

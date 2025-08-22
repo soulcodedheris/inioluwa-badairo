@@ -45,7 +45,7 @@
           },
           "configurations": {
             "production": {
-              "optimization": { "fonts": true },
+              "optimization": { "fonts": false },
               "budgets": [
                 {
                   "type": "initial",
@@ -67,6 +67,15 @@
             }
           },
           "defaultConfiguration": "production"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         },
         "serve": {
           "builder": "@angular/build:dev-server",
@@ -106,3 +115,8 @@
     }
   }
 }
+
+
+
+
+

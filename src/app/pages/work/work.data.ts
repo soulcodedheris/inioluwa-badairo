@@ -5,6 +5,7 @@ export type WorkItem = {
   tags: string[];
   role?: string;
   resultPct?: number;
+  thumbnailUrl?: string;
 };
 
 export const WORK_ITEMS: WorkItem[] = [
@@ -14,7 +15,8 @@ export const WORK_ITEMS: WorkItem[] = [
     blurb: 'Built scalable e-commerce solution with microservices architecture. Increased performance by 40% and reduced deployment time by 60%.',
     tags: ['Angular', 'Node.js', 'Microservices', 'Performance'],
     role: 'Lead Engineer',
-    resultPct: 40
+    resultPct: 40,
+    thumbnailUrl: '/soulcodedheris-logo.jpeg'
   },
   {
     slug: 'market-dashboard',

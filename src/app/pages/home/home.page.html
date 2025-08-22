@@ -11,7 +11,11 @@
       </div>
     </div>
     <div class="relative mx-auto h-56 w-56 overflow-hidden rounded-xl border border-gray-200 shadow-sm sm:mx-0 sm:h-80 sm:w-80 dark:border-gray-700" aria-hidden="true">
-      <img src="/Heris-halfbody.JPG" alt="Inioluwa Badairo half body" class="h-full w-full object-cover" fetchpriority="high" loading="eager" decoding="async" sizes="(min-width: 640px) 20rem, 14rem" width="640" height="640" />
+      <picture>
+        <source type="image/avif" srcset="/Heris-halfbody.avif" />
+        <source type="image/webp" srcset="/Heris-halfbody.webp" />
+        <img ngSrc="/Heris-halfbody.JPG" alt="Inioluwa Badairo half body" class="h-full w-full object-cover" fetchpriority="high" priority sizes="(min-width: 640px) 20rem, 14rem" width="4000" height="6000" style="height: auto;" />
+      </picture>
     </div>
   </div>
 </section>

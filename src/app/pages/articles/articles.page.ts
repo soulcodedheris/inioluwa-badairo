@@ -25,9 +25,9 @@ function estimateReadTime(html: string | undefined): number {
 export class ArticlesPage {
   articles = signal<Article[]>([]);
   query = signal<string>('');
-  sort = signal<'new'|'short'|'popular'>('new');
+  sort = signal<'new'|'short'>('new');
   queryValue = '';
-  sortValue: 'new'|'short'|'popular' = 'new';
+  sortValue: 'new'|'short' = 'new';
 
   // Category chips
   selectedCats = signal<Set<string>>(new Set());

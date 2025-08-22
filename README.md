@@ -36,6 +36,49 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
+### Static prerender and feeds
+
+The prebuild step generates prerendered HTML for top routes, articles, and case studies, along with `sitemap.xml`, `feed.xml`, and `feed.json`.
+
+- Set `SITE_ORIGIN` in CI for staging/previews so absolute URLs in feeds/sitemap are correct. Example (GitHub Actions):
+
+```yaml
+env:
+  SITE_ORIGIN: https://staging.soulcodedheris.com
+```
+
+- Locally, it defaults to `https://soulcodedheris.com`.
+
+### Husky & linting
+
+Husky is configured to run `prebuild` and `ng lint` on pre-commit. After cloning, run:
+
+```bash
+npm install
+npm run prepare
+```
+
+### PWA / Offline testing
+
+Build and serve the static output to test service worker caching and offline:
+
+```bash
+npm run build
+npx http-server dist/portfolio -c-1
+```
+
+Open DevTools → Application → Service Workers, toggle "Offline", and verify `/`, `/articles/:slug`, `/work/:slug` render.
+
+### Image optimization (optional)
+
+If you have local tools installed (cwebp/avifenc or ImageMagick), run:
+
+```bash
+bash scripts/convert-images.sh
+```
+
+This will generate AVIF/WebP for the hero and headshot images in `public/`. The site already falls back to JPEG if converters aren't available.
+
 ## Running unit tests
 
 To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:

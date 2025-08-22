@@ -6,21 +6,23 @@
   </header>
 
   <div class="mb-6 flex items-center gap-3">
-    <input type="search" placeholder="Search..." class="w-full rounded border px-3 py-2 dark:bg-zinc-800" [(ngModel)]="queryValue" (ngModelChange)="query.set(queryValue)" />
-    <select class="rounded border px-2 py-2 dark:bg-zinc-800" [(ngModel)]="sortValue" (ngModelChange)="sort.set(sortValue)">
+    <label for="articles-search" class="sr-only">Search articles</label>
+    <input id="articles-search" type="search" placeholder="Search articles" class="w-full rounded border px-3 py-2 dark:bg-zinc-800" [(ngModel)]="queryValue" (ngModelChange)="query.set(queryValue)" aria-label="Search articles" />
+    <label for="articles-sort" class="sr-only">Sort articles</label>
+    <select id="articles-sort" class="rounded border px-2 py-2 dark:bg-zinc-800" [(ngModel)]="sortValue" (ngModelChange)="sort.set(sortValue)" aria-label="Sort articles">
       <option value="new">Newest</option>
       <option value="short">Shortest</option>
     </select>
   </div>
 
-  <div class="mb-6 flex flex-wrap gap-2">
+  <div class="mb-6 flex flex-wrap gap-2" role="group" aria-label="Filter by category">
     @for (cat of categories(); track cat) {
       <button type="button" class="rounded-full border px-3 py-1 text-xs"
         [class.bg-blue-600]="selectedCats().has(cat)" [class.text-white]="selectedCats().has(cat)"
-        (click)="toggleCategory(cat)">{{ cat }}</button>
+        (click)="toggleCategory(cat)" [attr.aria-pressed]="selectedCats().has(cat)" [attr.aria-label]="'Filter by category '+cat">{{ cat }}</button>
     }
     @if (selectedCats().size) {
-      <button type="button" class="rounded-full border px-3 py-1 text-xs" (click)="toggleCategory('')">Clear</button>
+      <button type="button" class="rounded-full border px-3 py-1 text-xs" (click)="toggleCategory('')" aria-label="Clear selected categories">Clear</button>
     }
   </div>
 

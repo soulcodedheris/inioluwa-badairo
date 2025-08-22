@@ -7,7 +7,11 @@
 
   <div class="grid gap-6 sm:grid-cols-[200px_1fr]">
     <div class="relative h-52 w-52 overflow-hidden rounded-xl border border-gray-200 shadow-sm dark:border-gray-700">
-      <img src="/Heris-Headshot.jpg" alt="Inioluwa Badairo headshot" class="h-full w-full object-cover" width="600" height="600" />
+      <picture>
+        <source type="image/avif" srcset="/Heris-Headshot.avif" />
+        <source type="image/webp" srcset="/Heris-Headshot.webp" />
+        <img src="/Heris-Headshot.jpg" alt="Inioluwa Badairo headshot" class="h-full w-full object-cover" width="600" height="600" />
+      </picture>
     </div>
     <div class="space-y-4 text-gray-700 dark:text-gray-300">
       <p>I like products that reduce friction and increase courage. Psychology helps me choose what to emphasize; craft makes it fast and stable.</p>

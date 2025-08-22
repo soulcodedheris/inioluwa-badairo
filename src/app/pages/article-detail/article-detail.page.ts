@@ -17,6 +17,7 @@ type Article = { title: string; date: string; summary: string; slug: string; htm
 export class ArticleDetailPage {
   article = signal<Article | null>(null);
   related = signal<Article[]>([]);
+  readMins = signal<number>(0);
   safeHtml = signal<string | null>(null);
   toc = signal<{ id: string; text: string }[]>([]);
   copied = signal<boolean>(false);
@@ -65,6 +66,13 @@ export class ArticleDetailPage {
           // Prepare and sanitize HTML, update TOC and metadata
           this.prepareHtml(found).then(html => {
             this.safeHtml.set(html);
+            // estimate read time from original html
+            try {
+              const txt = (found.html || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+              const words = txt ? txt.split(' ').length : 0;
+              const mins = Math.max(1, Math.round(words / 225));
+              this.readMins.set(mins);
+            } catch {}
             this.setCanonical(slug);
             this.setMetaForArticle(found);
             this.setupReadingProgress();
@@ -104,10 +112,9 @@ export class ArticleDetailPage {
         const btn = div.ownerDocument?.createElement('button') || document.createElement('button');
         btn.setAttribute('type', 'button');
         btn.setAttribute('data-copy-anchor', h.id);
+        btn.setAttribute('aria-label', `Copy link to section ${h.textContent || ''}`);
         btn.textContent = '¶';
-        btn.style.marginLeft = '8px';
-        btn.style.opacity = '0.6';
-        btn.style.fontSize = '0.8em';
+        btn.className = 'anchor-copy-btn';
         btn.addEventListener?.('click', () => {
           try {
             const url = `${this.document.location.origin}${this.document.location.pathname}#${h.id}`;
@@ -133,9 +140,8 @@ export class ArticleDetailPage {
         const btn = div.ownerDocument?.createElement('button') || document.createElement('button');
         btn.textContent = 'Copy';
         btn.setAttribute('type', 'button');
-        btn.style.float = 'right';
-        btn.style.margin = '4px';
-        btn.style.fontSize = '0.75rem';
+        btn.setAttribute('aria-label', 'Copy code to clipboard');
+        btn.className = 'code-copy-btn';
         btn.addEventListener?.('click', () => {
           try {
             const code = pre.innerText || '';
@@ -276,7 +282,7 @@ export class ArticleDetailPage {
         return;
       }
       const s = this.document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js';
+      s.src = '/vendor/dompurify.min.js';
       s.async = true;
       s.setAttribute('data-dompurify', 'true');
       s.onload = () => resolve();

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BreadcrumbsComponent } from '../../shared/breadcrumbs.component';
 
@@ -21,7 +20,7 @@ export interface Certification {
 @Component({
   selector: 'app-certifications-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule, BreadcrumbsComponent],
+  imports: [CommonModule, FormsModule, BreadcrumbsComponent, NgOptimizedImage],
   templateUrl: './certifications.page.html',
   styleUrls: ['./certifications.page.css']
 })

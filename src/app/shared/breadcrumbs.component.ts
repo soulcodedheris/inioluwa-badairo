@@ -19,6 +19,7 @@ import { BreadcrumbService } from './breadcrumb.service';
         </li>
       </ng-container>
     </ol>
+    <script type="application/ld+json">{{ breadcrumbJsonLd() }}</script>
   </nav>
   `
 })
@@ -26,6 +27,23 @@ export class BreadcrumbsComponent {
   readonly crumbs$;
   constructor(private bc: BreadcrumbService) {
     this.crumbs$ = this.bc.crumbs$;
+  }
+  breadcrumbJsonLd(): string {
+    try {
+      const crumbs = (this.bc.crumbs$ as any).value as { label: string; url: string }[];
+      const itemList = (crumbs || []).map((c, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: c.label,
+        item: c.url || '/'
+      }));
+      const obj = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: itemList
+      };
+      return JSON.stringify(obj);
+    } catch { return ''; }
   }
 }
 

@@ -12,6 +12,10 @@ export class PrefetchRouteDirective {
     this.prefetch();
   }
 
+  @HostListener('focus') onFocus() {
+    this.prefetch();
+  }
+
   private async prefetch() {
     if (this.prefetched) return;
     const path = this.routePath || '';

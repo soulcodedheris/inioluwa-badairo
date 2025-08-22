@@ -36,11 +36,12 @@ export class MetaService {
     const key = Object.keys(map).find(k => url === k) || '/';
     const meta = map[key];
     if (meta) {
-      this.title.setTitle(meta.title);
-      this.setNamedMeta('description', meta.description);
-      this.setPropertyMeta('og:title', meta.title);
-      this.setPropertyMeta('og:description', meta.description);
-      this.setPropertyMeta('og:url', this.document.location.href);
+      const origin = this.document.location.origin;
+      const href = `${origin}${key}`;
+      // Canonical
+      this.setCanonical(href);
+      // Core defaults
+      this.applyDefaults(meta.title, meta.description, href, `${origin}/soulcodedheris-logo.jpeg`);
     }
   }
 
@@ -54,6 +55,30 @@ export class MetaService {
     let el = this.document.head.querySelector(`meta[property="${prop}"]`) as HTMLMetaElement | null;
     if (!el) { el = this.document.createElement('meta'); el.setAttribute('property', prop); this.document.head.appendChild(el); }
     el.setAttribute('content', content);
+  }
+
+  private setCanonical(absHref: string): void {
+    let link = this.document.head.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!link) { link = this.document.createElement('link'); link.setAttribute('rel', 'canonical'); this.document.head.appendChild(link); }
+    link.setAttribute('href', absHref);
+  }
+
+  private applyDefaults(title: string, description: string, url: string, imageAbsUrl: string): void {
+    // Title + Description
+    this.title.setTitle(title);
+    this.setNamedMeta('description', description);
+    // Open Graph
+    this.setPropertyMeta('og:title', title);
+    this.setPropertyMeta('og:description', description);
+    this.setPropertyMeta('og:type', 'website');
+    this.setPropertyMeta('og:url', url);
+    this.setPropertyMeta('og:site_name', 'SoulCodedHeris');
+    this.setPropertyMeta('og:image', imageAbsUrl);
+    // Twitter
+    this.setNamedMeta('twitter:card', 'summary_large_image');
+    this.setNamedMeta('twitter:title', title);
+    this.setNamedMeta('twitter:description', description);
+    this.setNamedMeta('twitter:image', imageAbsUrl);
   }
 }
 

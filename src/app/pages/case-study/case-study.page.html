@@ -7,6 +7,29 @@
     <p class="mt-4 text-gray-600 dark:text-gray-300">{{ item?.blurb || 'Problem, role, constraints, process, result, reflection.' }}</p>
   </header>
 
+  <section class="mt-6 grid grid-cols-2 gap-4 rounded-lg border border-gray-200 p-4 text-sm dark:border-gray-700">
+    @if (item?.role) {
+      <div>
+        <div class="text-gray-500">Role</div>
+        <div class="font-medium">{{ item?.role }}</div>
+      </div>
+    }
+    @if (item?.resultPct) {
+      <div>
+        <div class="text-gray-500">Outcome</div>
+        <div class="font-medium">+{{ item?.resultPct }}%</div>
+      </div>
+    }
+    <div>
+      <div class="text-gray-500">Duration</div>
+      <div class="font-medium">—</div>
+    </div>
+    <div>
+      <div class="text-gray-500">Team</div>
+      <div class="font-medium">—</div>
+    </div>
+  </section>
+
   <section class="mt-10 space-y-6">
     <div>
       <h2 class="text-2xl font-semibold">Problem</h2>

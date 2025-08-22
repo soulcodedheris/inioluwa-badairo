@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Portfolio</title>
+  <title>SoulCodedHeris</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; connect-src 'self'; font-src 'self' data: https: https://fonts.gstatic.com; frame-ancestors 'self'; form-action 'self'; base-uri 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; object-src 'none'; upgrade-insecure-requests; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'; font-src 'self' data:; form-action 'self'; base-uri 'self'">
   <meta name="description" content="SoulCodedHeris · Full-stack software engineering for human‑centered products. Building scalable solutions with modern technologies and thoughtful design.">
   <meta property="og:title" content="SoulCodedHeris · Software Engineer Portfolio">
   <meta property="og:description" content="Full-stack software engineering for human‑centered products by Inioluwa Badairo.">
@@ -15,36 +15,22 @@
   <meta name="twitter:title" content="SoulCodedHeris · Software Engineer Portfolio">
   <meta name="twitter:description" content="Full-stack software engineering for human‑centered products.">
   <meta name="twitter:image" content="/soulcodedheris-logo.jpeg">
-  <link rel="canonical" href="/">
+  
   <link rel="preload" as="image" href="/soulcodedheris-logo.jpeg" imagesrcset="/soulcodedheris-logo.jpeg 1x" imagesizes="28px">
-  <script>
-    (function(){
-      try {
-        const ls = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const dark = ls ? (ls === 'dark') : prefersDark;
-        if (dark) {
-          document.documentElement.classList.add('dark');
-          document.documentElement.setAttribute('data-theme','dark');
-        }
-      } catch(_) {}
-    })();
-  </script>
+  <script src="/js/theme-init.js" defer></script>
   <link rel="icon" type="image/x-icon" href="/soulcodedheris-logo.jpeg">
   <link rel="manifest" href="/manifest.webmanifest">
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="/js/sw-register.js" defer></script>
+  
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "SoulCodedHeris",
-    "url": "/",
+    "url": "https://soulcodedheris.com/",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "/articles?query={search_term_string}",
+      "target": "https://soulcodedheris.com/articles?query={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   }
