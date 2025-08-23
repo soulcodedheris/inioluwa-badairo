@@ -58,8 +58,9 @@ async function run() {
       const summary = meta.summary || body.split('\n').find(Boolean)?.slice(0,160) || '';
       const status = meta.status || '';
       const category = meta.category || '';
+      const categories = category ? category.split(',').map(c => c.trim()).filter(Boolean) : [];
       const platforms = meta.platforms || [];
-      articles.push({ slug, title, date, summary, html: htmlStr, status, category, platforms });
+      articles.push({ slug, title, date, summary, html: htmlStr, status, category, categories, platforms });
     }
     articles.sort((a,b) => (a.date < b.date ? 1 : -1));
     const publicAssetsDir = join(process.cwd(), 'public', 'assets');

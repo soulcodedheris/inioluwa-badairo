@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { BreadcrumbsComponent } from '../../shared/breadcrumbs.component';
 
-type Article = { title: string; date: string; summary: string; slug: string; html?: string; readMins?: number };
+type Article = { title: string; date: string; summary: string; slug: string; html?: string; readMins?: number; category?: string; categories?: string[] };
 
 function estimateReadTime(html: string | undefined): number {
   if (!html) return 1;
@@ -34,8 +34,11 @@ export class ArticlesPage {
   categories = computed(() => {
     const set = new Set<string>();
     this.articles().forEach(a => {
-      const c = (a as any).category as string | undefined;
-      if (c && c.trim()) set.add(c);
+      if (a.categories && a.categories.length) {
+        a.categories.forEach(cat => set.add(cat));
+      } else if (a.category && a.category.trim()) {
+        set.add(a.category);
+      }
     });
     return Array.from(set).sort();
   });
@@ -52,7 +55,12 @@ export class ArticlesPage {
     let arr = this.articles();
     if (q) arr = arr.filter(a => a.title.toLowerCase().includes(q) || (a.summary||'').toLowerCase().includes(q));
     const cats = this.selectedCats();
-    if (cats.size) arr = arr.filter(a => cats.has(((a as any).category as string) || ''));
+    if (cats.size) arr = arr.filter(a => {
+      if (a.categories && a.categories.length) {
+        return a.categories.some(cat => cats.has(cat));
+      }
+      return cats.has(a.category || '');
+    });
     if (this.sort() === 'short') arr = [...arr].sort((a,b) => (a.readMins||0) - (b.readMins||0));
     else arr = [...arr].sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     return arr;
